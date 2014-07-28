@@ -1,18 +1,19 @@
-#include "BookReader.h"
+#include "BookReader.hpp"
 
 #include <iostream>
 
 using namespace std;
 
-BookReader::BookReader()
+BookArea::BookArea()
+{
+	cout << "Created" << endl; 
+}
+
+BookArea::~BookArea()
 {
 }
 
-BookReader::~BookReader()
-{
-}
-
-bool BookReader::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
+bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
 	Gtk::Allocation allocation = get_allocation();
 	const int width = allocation.get_width();
@@ -38,19 +39,26 @@ bool BookReader::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 	return true;
 }
 
-void BookReader::draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr,
+void BookArea::draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr,
                             int width, int height)
 {
+	
 	cr->rectangle(0, 0, width, height);
 	cr->fill();
+	cr->rectangle(0, 0, width, height);
+	cr->set_line_width(1.0);
+	cr->set_source_rgb(0.2,0.2,0.2);
+	cr->stroke();
+	
+	
 }
 
-void BookReader::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height, Glib::ustring title, int pagen) {
+void BookArea::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height, Glib::ustring title, int pagen) {
 	
 	Pango::FontDescription font; 
 	
-	font.set_family("Sans");
-	font.set_weight(Pango::WEIGHT_NORMAL);
+	font.set_family("Sans italic");
+	font.set_weight(Pango::WEIGHT_ULTRALIGHT);
 	font.set_absolute_size(12*Pango::SCALE);
 	
 	Glib::RefPtr<Pango::Layout> layout = create_pango_layout("Pride and Prejudice");
@@ -60,7 +68,6 @@ void BookReader::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, int width,
 	int text_width;
 	int text_height;
 
-	//get the text dimensions (it updates the variables -- by reference)
 	layout->get_pixel_size(text_width, text_height);
 
 	// Position the text in the middle
@@ -72,7 +79,7 @@ void BookReader::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, int width,
 
 	layout->set_font_description(font);
 
-	//get the text dimensions (it updates the variables -- by reference)
+	
 	layout->get_pixel_size(text_width, text_height);
 
 	// Position the text in the middle
@@ -87,7 +94,7 @@ void BookReader::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, int width,
 }
 
 
-void BookReader::draw_text(const Cairo::RefPtr<Cairo::Context>& cr,
+void BookArea::draw_text(const Cairo::RefPtr<Cairo::Context>& cr,
                        int rectangle_width, int rectangle_height)
 {
 
@@ -129,8 +136,23 @@ void BookReader::draw_text(const Cairo::RefPtr<Cairo::Context>& cr,
     cout << "Layout contains " << nlines << " lines" << endl;
 
     // Position the text. Horizontal indent, vertical indent. 
-    cr->move_to((rectangle_width * (MARGIN_PERCENT / 100)), 100);
+    cr->move_to((rectangle_width * (MARGIN_PERCENT / 100)), rectangle_height * (MARGIN_PERCENT * 2 / 100));
 
     layout->show_in_cairo_context(cr);
     
 }
+
+BookReader::BookReader() {
+	m_book_area.set_hexpand(true);
+	add(m_book_area);
+}
+	
+BookReader::~BookReader() {
+	
+}
+
+
+
+
+
+
