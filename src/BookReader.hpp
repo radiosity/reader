@@ -3,6 +3,11 @@
 
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/box.h>
+#include <string>
+#include <vector>
+
+using std::string; 
+using std::vector;
 
 class BookArea : public Gtk::DrawingArea
 {
@@ -16,13 +21,15 @@ protected:
 
 private:
 
-  double MARGIN_PERCENT = 6.0;
+	double MARGIN_PERCENT = 8.0;
 
-  void draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height);
-  void draw_header(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height, Glib::ustring title, int pagen);
-  void draw_text(const Cairo::RefPtr<Cairo::Context>& cr, int rectangle_width, int rectangle_height);
+	vector<string> paragraphs;
 
-};
+	void draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height);
+	void draw_header(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height, Glib::ustring title, int pagen);
+	void draw_text(const Cairo::RefPtr<Cairo::Context>& cr, int rectangle_width, int rectangle_height);
+
+	};
 
 class BookReader : public Gtk::Box {
 	

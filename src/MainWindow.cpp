@@ -70,7 +70,7 @@ MainWindow::MainWindow()
 	// Set headerbar as titlebar
 	set_titlebar(m_header_bar);
 	
-	m_reader.set_border_width(20);
+	m_reader.set_border_width(15);
 	m_reader.set_size_request(600,900);
 	add(m_reader);
 
