@@ -23,14 +23,35 @@
 #(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 #SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-VariantDir('bin', 'src', duplicate=0)
+VariantDir('build/debug', 'src')
+VariantDir('build/release', 'src')
 
-env = Environment()
-env.ParseConfig('pkg-config gtkmm-3.0 --cflags --libs')
+envRelease = Environment()
 
-env['CXXFLAGS'] = "-O0 -g -std=c++11 -Wall -Wfatal-errors -pedantic"
+envRelease['CXXFLAGS'] = "-O2 -std=c++11 -Wall -Wfatal-errors -pedantic"
+envRelease['CPPPATH'] = "include"
+	
+envRelease.ParseConfig('pkg-config libxml++-2.6 glibmm-2.4 gtkmm-3.0 --cflags --libs')
+envRelease.Append(LIBS=['boost_system', 'boost_filesystem'])
+envRelease.Append(CPPPATH = ['../libepub++/include/'])
+ 
+sources = Glob('build/release/*.cpp') 
+sources += ['../libepub++/bin/libepub++.a']
+ 
+envRelease.Program('bin/release', sources)
 
-sources = Glob('src/*.cpp')
-#sources = sources + Glob('src/character/*.cpp');
+#
 
-env.Program('bin/main', sources)
+envDebug = Environment()
+
+envDebug['CXXFLAGS'] = "-O0 -g -std=c++11 -Wall -Wfatal-errors -pedantic"
+envDebug['CPPPATH'] = "include"
+	
+envDebug.ParseConfig('pkg-config libxml++-2.6 glibmm-2.4 gtkmm-3.0 --cflags --libs')
+envDebug.Append(LIBS=['boost_system', 'boost_filesystem'])
+envDebug.Append(CPPPATH = ['../libepub++/include/'])
+ 
+sources = Glob('build/debug/*.cpp') 
+sources += ['../libepub++/bin/libepub++-debug.a']
+ 
+envDebug.Program('bin/debug', sources)
