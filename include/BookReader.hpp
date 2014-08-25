@@ -33,6 +33,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
+#include <Epub.hpp>
+
 using std::string; 
 using std::vector;
 
@@ -50,7 +52,7 @@ private:
 
 	double MARGIN_PERCENT = 8.0;
 
-	vector<string> paragraphs;
+	Epub book;
 
 	void draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height);
 	void draw_header(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height, Glib::ustring title, int pagen);
