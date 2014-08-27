@@ -36,6 +36,8 @@ MainWindow::MainWindow()
 	set_border_width(0);
 	//set_default_size(800,800);
 
+	set_resizable(false);
+	
 	// Header bar
 	header_bar = &m_header_bar;
 	header_bar->set_title("Lector");
@@ -71,7 +73,7 @@ MainWindow::MainWindow()
 	set_titlebar(m_header_bar);
 	
 	m_reader.set_border_width(15);
-	m_reader.set_size_request(600,900);
+	m_reader.set_size_request(630,930);
 	add(m_reader);
 
 	show_all_children();
