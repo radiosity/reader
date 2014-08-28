@@ -31,7 +31,7 @@ envRelease = Environment()
 envRelease['CXXFLAGS'] = "-O2 -std=c++11 -Wall -Wfatal-errors -pedantic"
 envRelease['CPPPATH'] = "include"
 	
-envRelease.ParseConfig('pkg-config libxml++-2.6 glibmm-2.4 gtkmm-3.0 --cflags --libs')
+envRelease.ParseConfig('pkg-config libxml++-2.6 glibmm-2.4 gtkmm-3.0 cairomm-1.0 pangomm-1.4 --cflags --libs')
 envRelease.Append(LIBS=['boost_system', 'boost_filesystem'])
 envRelease.Append(CPPPATH = ['../libepub++/include/'])
  
@@ -47,7 +47,7 @@ envDebug = Environment()
 envDebug['CXXFLAGS'] = "-O0 -g -std=c++11 -Wall -Wfatal-errors -pedantic"
 envDebug['CPPPATH'] = "include"
 	
-envDebug.ParseConfig('pkg-config libxml++-2.6 glibmm-2.4 gtkmm-3.0 --cflags --libs')
+envDebug.ParseConfig('pkg-config libxml++-2.6 glibmm-2.4 gtkmm-3.0 cairomm-1.0 pangomm-1.4 --cflags --libs')
 envDebug.Append(LIBS=['boost_system', 'boost_filesystem'])
 envDebug.Append(CPPPATH = ['../libepub++/include/'])
  
