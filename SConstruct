@@ -32,7 +32,7 @@ envRelease['CXXFLAGS'] = "-O2 -std=c++11 -Wall -Wfatal-errors -pedantic"
 envRelease['CPPPATH'] = "include"
 	
 envRelease.ParseConfig('pkg-config libxml++-2.6 glibmm-2.4 gtkmm-3.0 cairomm-1.0 pangomm-1.4 --cflags --libs')
-envRelease.Append(LIBS=['boost_system', 'boost_filesystem'])
+envRelease.Append(LIBS=['boost_system', 'boost_filesystem', 'sqlite3'])
 envRelease.Append(CPPPATH = ['../libepub++/include/'])
  
 sources = Glob('build/release/*.cpp') 
@@ -48,7 +48,7 @@ envDebug['CXXFLAGS'] = "-O0 -g -std=c++11 -Wall -Wfatal-errors -pedantic"
 envDebug['CPPPATH'] = "include"
 	
 envDebug.ParseConfig('pkg-config libxml++-2.6 glibmm-2.4 gtkmm-3.0 cairomm-1.0 pangomm-1.4 --cflags --libs')
-envDebug.Append(LIBS=['boost_system', 'boost_filesystem'])
+envDebug.Append(LIBS=['boost_system', 'boost_filesystem', 'sqlite3'])
 envDebug.Append(CPPPATH = ['../libepub++/include/'])
  
 sources = Glob('build/debug/*.cpp') 
