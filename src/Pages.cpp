@@ -405,11 +405,7 @@ namespace {
 				
 			}
 			
-			PageContentType pct;
-			if(contenttype == 0) pct = PAGE_H1; 
-			else if(contenttype == 1) pct = PAGE_H2; 
-			else if(contenttype == 2) pct = PAGE_PARAGRAPH; 
-			else pct = PAGE_FRAGMENT; 
+			PageContentType pct = static_cast<PageContentType>(contenttype);
 			
 			pd.items.push_back(PageContentItem(pct, content));
 				
