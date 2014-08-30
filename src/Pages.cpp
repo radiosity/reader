@@ -331,6 +331,16 @@ namespace {
 							
 							sqlite3_bind_int(book_insert, 3, PAGE_PARAGRAPH);
 							sqlite3_bind_text(book_insert, 4, packres.first.c_str(), -1, SQLITE_STATIC);
+						
+							//We will need to break out of the loop under this condition, 
+							//but if we do then we haven't saved the info in the database. 
+							//So we have to go out of our way to save it here. 
+							
+							int result = sqlite3_step(book_insert);
+							if(result != SQLITE_OK && result != SQLITE_ROW && result != SQLITE_DONE) throw -1;
+
+							sqlite3_reset(book_insert);
+							
 						}
 						break;
 					}
