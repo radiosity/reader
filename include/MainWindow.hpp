@@ -64,6 +64,9 @@ protected:
 	Button m_open_button; 
 	Button m_open_menu; 
 	Button m_save; 
+	
+	//Signal handler
+	virtual bool on_key_press_event(GdkEventKey* event);
 
 
 private:

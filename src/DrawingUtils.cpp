@@ -79,6 +79,8 @@ void DrawingUtils::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, const in
 	
 	attributes = Pango::AttrList(to_string(pagen), 0, parsed_txt, stuff);
 
+	font.set_absolute_size(16*Pango::SCALE);
+
 	layout = Pango::Layout::create(cr);
 	layout->set_attributes(attributes);
 	layout->set_font_description(font);

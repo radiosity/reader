@@ -30,6 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/box.h>
+#include <gtkmm/window.h>
 #include <string>
 #include <vector>
 
@@ -43,17 +44,18 @@ using Glib::ustring;
 
 class BookArea : public Gtk::DrawingArea
 {
-public:
-  BookArea();
-  virtual ~BookArea();
+	public:
+		BookArea();
+		virtual ~BookArea();
+	
+		int pagenum;
 
-protected:
-  //Override default signal handler:
-  virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
+	protected:
+		//Override default signal handler:
+		virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
 
-private:
-
-	Pages pages;
+	private:
+		Pages pages;
 
 };
 
@@ -63,8 +65,8 @@ public:
 	BookReader();
 	~BookReader();
 
-protected:
 	BookArea m_book_area;
+
 };
 
 #endif // BOOKREADER_H

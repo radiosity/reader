@@ -344,13 +344,13 @@ namespace {
 
 				sqlite3_reset(book_insert);
 				
-				pages.add(pd);
-				
 				itemid++;
 				
 			}
+			
+			pages.add(pd);
 
-			//cr->show_page();
+			cr->show_page();
 			
 		}	
 		
@@ -376,7 +376,7 @@ namespace {
 			//Failed to open
 		}
 		
-		const string book_select_sql = "SELECT * FROM book";
+		const string book_select_sql = "SELECT * FROM book ORDER BY pagen, descriptorid";
 		
 		sqlite3_stmt * book_select; 
 		
@@ -399,7 +399,7 @@ namespace {
 			if(pagen != currentpagen) {
 				//New page! wrap up the old page.
 				
-				pagen = currentpagen; 
+				currentpagen = pagen; 
 				pages.add(pd);
 				pd = PageDescriptor();
 				

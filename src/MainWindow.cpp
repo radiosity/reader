@@ -29,8 +29,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "BookReader.hpp"
 #include "Global.hpp"
 
+#include <iostream>
+
+using std::cout; 
+using std::endl; 
+
 MainWindow::MainWindow() 
 {
+	
+	add_events(Gdk::KEY_PRESS_MASK);
+	
 	// Window properties
 	//set_title("HeaderBar Example");
 	set_border_width(0);
@@ -102,6 +110,34 @@ void MainWindow::on_recent() {
 }	
 
 void MainWindow::on_create() {
+	
+}
+
+
+bool MainWindow::on_key_press_event(GdkEventKey* event)
+{
+
+	//cout << "Called" << endl; 
+	
+	if(event->keyval == GDK_KEY_Right)
+	{
+		//cout << "Right" << endl; 
+		m_reader.m_book_area.pagenum++; 
+		m_reader.m_book_area.queue_draw(); 
+	}
+	
+	if(event->keyval == GDK_KEY_Left)
+	{
+		//cout << "Left" << endl; 
+		if(m_reader.m_book_area.pagenum != 0) {
+			m_reader.m_book_area.pagenum--; 
+			m_reader.m_book_area.queue_draw(); 
+		}
+	}
+	return true;
+
+	//if the event has not been handled, call the base class
+	return Gtk::Window::on_key_press_event(event);
 	
 }
 

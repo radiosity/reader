@@ -28,12 +28,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "BookReader.hpp"
 
 #include <iostream>
+#include <gtkmm.h>
 
 #include "DrawingUtils.hpp"
 
 using namespace std;
 
-BookArea::BookArea() : pages()
+BookArea::BookArea() : pagenum(0), pages()
 {
 	cout << "Created" << endl; 
 	
@@ -50,8 +51,6 @@ BookArea::~BookArea()
 
 bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
-	
-	int pagenum = 0;
 	
 	PageDescriptor pd = pages.get(pagenum);
 
@@ -79,7 +78,11 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 	for(PageContentItem pci : pd.items) {
 		
 		if(pci.pct == PAGE_H1) start_pos += DrawingUtils::draw_h1(cr, pci.content, rectangle_width, rectangle_height); 
-		else if(pci.pct == PAGE_H2) start_pos +=DrawingUtils::draw_h2(cr, pci.content, rectangle_width, rectangle_height, start_pos); 
+		else if(pci.pct == PAGE_H2) {
+			start_pos += 30;
+			start_pos +=DrawingUtils::draw_h2(cr, pci.content, rectangle_width, rectangle_height, start_pos); 
+			start_pos += 30;
+		}
 		else if(pci.pct == PAGE_PARAGRAPH) start_pos += DrawingUtils::draw_text(cr, pci.content, rectangle_width, rectangle_height, start_pos);
 		else if(pci.pct == PAGE_FRAGMENT) start_pos += DrawingUtils::draw_fragment(cr, pci.content, rectangle_width, rectangle_height, start_pos);
 		
@@ -87,7 +90,6 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 
 	return true;
 }
-
 
 BookReader::BookReader() {
 	m_book_area.set_hexpand(true);
