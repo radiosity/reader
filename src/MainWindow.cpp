@@ -48,8 +48,8 @@ MainWindow::MainWindow()
 	
 	// Header bar
 	header_bar = &m_header_bar;
-	header_bar->set_title("Lector");
-	header_bar->set_subtitle("No Book Loaded");
+	header_bar->set_title("Reader");
+	header_bar->set_subtitle("Pride and Prejudice");
 	header_bar->set_show_close_button();
 
 	m_create.signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_create));

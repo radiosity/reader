@@ -75,16 +75,21 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 	
 	int start_pos = 0; 
 	
+	int itemid = 0; 
+	
 	for(PageContentItem pci : pd.items) {
 		
 		if(pci.pct == PAGE_H1) start_pos += DrawingUtils::draw_h1(cr, pci.content, rectangle_width, rectangle_height); 
 		else if(pci.pct == PAGE_H2) {
-			start_pos += 30;
+			// Only pack out the header when it's not the first thing in the page
+			if (itemid != 0) start_pos += 30;
 			start_pos +=DrawingUtils::draw_h2(cr, pci.content, rectangle_width, rectangle_height, start_pos); 
 			start_pos += 30;
 		}
 		else if(pci.pct == PAGE_PARAGRAPH) start_pos += DrawingUtils::draw_text(cr, pci.content, rectangle_width, rectangle_height, start_pos);
 		else if(pci.pct == PAGE_FRAGMENT) start_pos += DrawingUtils::draw_fragment(cr, pci.content, rectangle_width, rectangle_height, start_pos);
+		
+		itemid++; 
 		
 	}
 

@@ -231,13 +231,13 @@ namespace {
 			
 			string filename = "pages/page";
 			filename += to_string(pagenum+1); 
-			filename += ".pdf"; 
+			filename += ".svg"; 
 		
 			const int width = 600;
 			const int height = 900;
 			
-			Cairo::RefPtr<Cairo::PdfSurface> surface =
-				Cairo::PdfSurface::create(filename, width, height);
+			Cairo::RefPtr<Cairo::SvgSurface> surface =
+				Cairo::SvgSurface::create(filename, width, height);
 			Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
 			
 			const int rectangle_width = width;
@@ -303,7 +303,8 @@ namespace {
 					
 					pd.items.push_back(PageContentItem(PAGE_H2, c.content));
 					
-					start_pos += 30;
+					// Only pack out the header when it's not the first thing in the page
+					if (itemid != 0) start_pos += 30;
 					start_pos += DrawingUtils::draw_h2(cr, c.content, rectangle_width, rectangle_height, start_pos); 
 					start_pos += 30; 
 				}	
@@ -439,9 +440,7 @@ namespace {
 } //end of anonymous namespace
 
 void Paginator::load(Pages &pages, string filename) {
-	
-	Pango::init();
-	
+
 	//OK, time for heavy lifting;
 	
 	path file = path(filename);

@@ -396,8 +396,8 @@ pair<ustring, ustring> DrawingUtils::pack_text(const Cairo::RefPtr<Cairo::Contex
 				
 			}
 			else {
-				//so, first, let's burn the previous working layout. 
 				cr->move_to((rectangle_width * (MARGIN_PERCENT / 100)), start_pos + rectangle_height * (MARGIN_PERCENT * 2 / 100)/2);
+				//so, first, let's burn the previous working layout. 
 
 				working_layout->show_in_cairo_context(cr);
 				
