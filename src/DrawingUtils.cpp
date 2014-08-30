@@ -198,7 +198,7 @@ bool DrawingUtils::will_fit_text(const Cairo::RefPtr<Cairo::Context>& cr, const 
 	int val = start_pos + text_height; 
 	int threshold = rectangle_height * (1 - (2 * (MARGIN_PERCENT/100)));
 
-	if(val < threshold) return true; 
+	if(val <= threshold) return true; 
 	else return false; 
 
 }
@@ -383,7 +383,7 @@ pair<ustring, ustring> DrawingUtils::pack_text(const Cairo::RefPtr<Cairo::Contex
 		int val = start_pos + text_height; 
 		int threshold = rectangle_height * (1 - (2 * (MARGIN_PERCENT/100)));
 
-		if(val < threshold) {
+		if(val <= threshold) {
 			//it fits;
 			working_layout = layout;
 			working_text = clipped_text; 
