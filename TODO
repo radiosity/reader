@@ -1,3 +1,8 @@
 Allow movement through the pages. 
 
 Load and Save (somehow) the content metadata to and from the SQLite database
+
+Metadata to store:
+	version?
+	current page?
+	creation date?
