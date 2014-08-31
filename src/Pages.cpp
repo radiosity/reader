@@ -262,7 +262,7 @@ namespace {
 
 			int start_pos = 0; 
 
-			cr->set_source_rgb(0.1, 0.1, 0.1);
+			cr->set_source_rgb(0.33, 0.33, 1.0);
 
 			if(has_fragment) {
 				
@@ -302,15 +302,21 @@ namespace {
 					start_pos += DrawingUtils::draw_h1(cr, c.content, rectangle_width, rectangle_height); 
 				}
 				else if (c.type == H2) {
-					sqlite3_bind_int(book_insert, 3, PAGE_H2);
-					sqlite3_bind_text(book_insert, 4, c.content.c_str(), -1, SQLITE_STATIC);
-					
-					pd.items.push_back(PageContentItem(PAGE_H2, c.content));
-					
-					// Only pack out the header when it's not the first thing in the page
-					if (itemid != 0) start_pos += 30;
-					start_pos += DrawingUtils::draw_h2(cr, c.content, rectangle_width, rectangle_height, start_pos); 
-					start_pos += 30; 
+					if(DrawingUtils::will_fit_h2(cr, c.content, rectangle_width, rectangle_height, start_pos)) {
+						sqlite3_bind_int(book_insert, 3, PAGE_H2);
+						sqlite3_bind_text(book_insert, 4, c.content.c_str(), -1, SQLITE_STATIC);
+						
+						pd.items.push_back(PageContentItem(PAGE_H2, c.content));
+						
+						// Only pack out the header when it's not the first thing in the page
+						if (itemid != 0) start_pos += 30;
+						start_pos += DrawingUtils::draw_h2(cr, c.content, rectangle_width, rectangle_height, start_pos); 
+						start_pos += 30; 
+					}
+					else {
+						epub_content_index--;
+						break;
+					}
 				}	
 				else if (c.type == P) {
 					//cout << c.content << endl; 
