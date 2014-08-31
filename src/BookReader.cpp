@@ -51,6 +51,8 @@ BookArea::~BookArea()
 
 bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
+
+	Cairo::RefPtr<Cairo::Surface> surface = cr->get_target();
 	
 	PageDescriptor pd = pages.get(pagenum);
 
