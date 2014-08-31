@@ -165,6 +165,10 @@ namespace {
 	
 	void __load_epub(Pages &pages, path filename, path dbfilename) {
 		
+		//Yield to the interface thread if this one is
+		//executing first. 
+		std::this_thread::yield();
+		
 		cout << "Loading Epub" << endl; 
 		
 		//So, first let's sort out the database 
@@ -375,6 +379,10 @@ namespace {
 	}		
 	
 	void __load_sqlite(Pages &pages, path filename) {
+		
+		//Yield to the interface thread if this one is
+		//executing first.
+		std::this_thread::yield();
 		
 		cout << "Loading SQLite" << endl; 
 		
