@@ -52,6 +52,7 @@ class DrawingUtils {
 		static void draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height);
 		static void draw_header(const Cairo::RefPtr<Cairo::Context>& cr, const int width, const int height, const ustring title, const int pagen);
 		static int draw_h1(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height);
+		static bool will_fit_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
 		static int draw_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
 		static bool will_fit_text(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos); 
 		static pair<ustring, ustring> pack_text(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);

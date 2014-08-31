@@ -132,6 +132,41 @@ int DrawingUtils::draw_h1(const Cairo::RefPtr<Cairo::Context>& cr, const ustring
 
 }
 
+bool DrawingUtils::will_fit_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text,
+                       const int rectangle_width, const int rectangle_height, const int start_pos)
+{
+	
+	Pango::FontDescription font;
+
+	font.set_family("EB Garamond");
+	font.set_weight(Pango::WEIGHT_NORMAL);
+	font.set_absolute_size(40*Pango::SCALE);
+	
+	ustring parsed_txt;
+	gunichar stuff;
+
+	auto attributes = Pango::AttrList(text, 0, parsed_txt, stuff);
+
+	Glib::RefPtr<Pango::Layout> layout = Pango::Layout::create(cr);
+	layout->set_attributes(attributes);
+	layout->set_text(parsed_txt);
+	layout->set_font_description(font);
+	layout->set_alignment(Pango::Alignment::ALIGN_CENTER);
+	layout->set_width((rectangle_width * (1 - (2 * (MARGIN_PERCENT/100)))) * Pango::SCALE);
+	
+	int text_width;
+	int text_height;
+
+	layout->get_pixel_size(text_width, text_height);
+	
+	int val = start_pos + text_height; 
+	int threshold = rectangle_height * (1 - (2 * (MARGIN_PERCENT/100)));
+
+	if(val <= threshold) return true; 
+	else return false; 	
+
+}
+
 int DrawingUtils::draw_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text,
                        const int rectangle_width, const int rectangle_height, const int start_pos)
 {

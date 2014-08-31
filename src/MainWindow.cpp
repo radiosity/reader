@@ -117,14 +117,16 @@ void MainWindow::on_create() {
 bool MainWindow::on_key_press_event(GdkEventKey* event)
 {
 
-	//cout << "Called" << endl; 
+	cout << "Keyboard Event recieved" << endl; 
 	
 	if(event->keyval == GDK_KEY_Right)
 	{
-		//cout << "Right" << endl; 
+		cout << "Going forward one page to: " << m_reader.m_book_area.pagenum + 1 << endl; 
 		m_reader.m_book_area.pagenum++; 
 		m_reader.m_book_area.queue_draw(); 
 	}
+	
+	cout << "Waiting for keyboard event" << endl; 
 	
 	if(event->keyval == GDK_KEY_Left)
 	{
