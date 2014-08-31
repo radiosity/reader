@@ -37,6 +37,8 @@ using std::endl;
 MainWindow::MainWindow() 
 {
 	
+	set_icon_from_file("icon.png");
+	
 	add_events(Gdk::KEY_PRESS_MASK);
 	
 	// Window properties

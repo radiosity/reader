@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   inkscape:export-filename="/home/rmarti/Code/reader/icon.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   sodipodi:docname="New document 1">
+  <defs
+     id="defs4">
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:collect="always"
+       id="filter4166">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.4702651"
+         id="feGaussianBlur4168" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.5"
+     inkscape:cx="501.95579"
+     inkscape:cy="310.49759"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1680"
+     inkscape:window-height="995"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="font-size:4px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.0339694;stroke-miterlimit:4;stroke-opacity:0.22272728;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter4166);enable-background:accumulate;font-family:Sans"
+       id="rect4022-9"
+       width="63.214073"
+       height="91.02198"
+       x="-19.762999"
+       y="915.98798"
+       transform="matrix(0.95571328,0,0,0.9493352,21.958848,-530.44627)"
+       ry="2.9681718"
+       d="m 145.48799,37.704644 c 0.81671,0 1.63343,0 2.45014,0 0.0703,0 0.12697,0.09867 0.12697,0.221234 0,2.113966 0,4.227932 0,6.341899 0,0.122563 -0.0566,0.221234 -0.12697,0.221234 -0.81671,0 -1.63343,0 -2.45014,0 -0.0703,0 -0.12697,-0.09867 -0.12697,-0.221234 0,-2.113967 0,-4.227933 0,-6.341899 0,-0.122564 0.0566,-0.221234 0.12697,-0.221234 z" />
+    <rect
+       style="font-size:4px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#5a5a5a;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
+       id="rect4022"
+       width="59.271847"
+       height="85.345566"
+       x="3.6179144"
+       y="339.24939"
+       ry="3.1492946"
+       d="m 168.28578,69.591622 c 0.80558,0 1.61115,0 2.41672,0 0.0796,0 0.14368,0.111655 0.14368,0.250347 0,2.094558 0,4.189116 0,6.283674 0,0.138692 -0.0641,0.250346 -0.14368,0.250346 -0.80557,0 -1.61114,0 -2.41672,0 -0.0796,0 -0.14367,-0.111654 -0.14367,-0.250346 0,-2.094558 0,-4.189116 0,-6.283674 0,-0.138692 0.0641,-0.250347 0.14367,-0.250347 z" />
+    <text
+       xml:space="preserve"
+       style="font-size:11.25164223px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:EB Garamond;-inkscape-font-specification:EB Garamond Bold"
+       x="10.707392"
+       y="355.24341"
+       id="text4024"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4026"
+         x="10.707392"
+         y="355.24341">Chapter </tspan><tspan
+         sodipodi:role="line"
+         x="10.707392"
+         y="369.30795"
+         id="tspan4028">One</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4034"
+       style="font-size:2px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:justify;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:EB Garamond;-inkscape-font-specification:EB Garamond Bold"
+       transform="matrix(0.93763686,0,0,0.93763686,3.2494676,-552.39385)"><flowRegion
+         id="flowRegion4036"><rect
+           id="rect4038"
+           width="47.855976"
+           height="51.896587"
+           x="8.4600277"
+           y="993.77332"
+           style="font-size:2px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:justify;text-anchor:start;font-family:EB Garamond;-inkscape-font-specification:EB Garamond Bold" /></flowRegion><flowPara
+         id="flowPara4040"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in elit semper, auctor metus convallis, tempus sapien. Praesent tempor laoreet erat, id interdum massa scelerisque a. Sed et sollicitudin sem. Nullam ullamcorper aliquam lectus, ac fringilla lorem. Suspendisse potenti. Aenean viverra, purus vitae accumsan consectetur, nulla metus porta quam, egestas euismod nisi ipsum eu metus. Fusce dignissim porta erat nec tempor. Ut non accumsan enim, aliquet feugiat justo. Curabitur eu rutrum quam, eget tempus mi.</flowPara><flowPara
+         id="flowPara4042" /><flowPara
+         id="flowPara4044">Nulla ac nunc tellus. Proin pulvinar euismod lacinia. Integer sit amet pulvinar libero. Suspendisse porttitor risus convallis dolor tempor, quis ultricies purus suscipit. Donec non placerat erat, a iaculis nunc. Vestibulum a tristique nisi. Pellentesque bibendum sollicitudin ornare. </flowPara></flowRoot>    <path
+       style="color:#000000;fill:#ff9090;fill-opacity:1;fill-rule:nonzero;stroke:#ff6b6b;stroke-width:0.73384774;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 50.275658,339.23214 5.10515,0 0,26.24034 -2.41263,-1.65409 -2.69252,1.65409 z"
+       id="rect2985"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc" />
+  </g>
+</svg>
