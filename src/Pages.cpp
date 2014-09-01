@@ -157,6 +157,15 @@ void Pages::add(PageDescriptor p) {
 	
 }
 
+void Pages::clear() {
+	
+	unique_lock<mutex> lck(mtx); 
+	
+	finished = false; 
+	descriptors.clear();
+	
+}
+
 // Now the Paginator iteself
 
 //anonymous namespace for epub loading and

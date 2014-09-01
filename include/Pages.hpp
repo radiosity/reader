@@ -107,6 +107,8 @@ class Pages {
 		PageDescriptor get(const unsigned int n); 
 		void add(PageDescriptor p);
 	
+		void clear(); 
+	
 };
 
 class Paginator
