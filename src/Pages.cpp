@@ -178,7 +178,9 @@ namespace {
 		//executing first. 
 		std::this_thread::yield();
 		
+		#ifdef DEBUG
 		cout << "Loading Epub" << endl; 
+		#endif
 		
 		//So, first let's sort out the database 
 		
@@ -237,7 +239,9 @@ namespace {
 			//Create a new PageDescriptor to store the items we're going to create. 
 			PageDescriptor pd;
 			
+			#ifdef DEBUG
 			cout << "Processing page " << pagenum << endl; 
+			#endif
 			
 			//reset the id counter
 			itemid = 0; 
@@ -389,7 +393,9 @@ namespace {
 		sqlite3_finalize(book_insert); 
 		sqlite3_close(db);
 		
+		#ifdef DEBUG
 		cout << "Done Loading" << endl; 
+		#endif
 		
 	}		
 	
@@ -399,7 +405,9 @@ namespace {
 		//executing first.
 		std::this_thread::yield();
 		
+		#ifdef DEBUG
 		cout << "Loading SQLite" << endl; 
+		#endif
 		
 		sqlite3 * db; 
 		int rc;
@@ -482,7 +490,9 @@ void Paginator::load(Pages &pages, string filename) {
 	
 	databasefile /= dbfn; 
 	
+	#ifdef DEBUG
 	cout << databasefile << endl; 
+	#endif
 	
 	if(!exists(databasefile)) {
 		//Urgh. we need to load the whole thing from the damn EPUB file.  

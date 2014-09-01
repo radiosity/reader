@@ -50,6 +50,7 @@ envDebug['CPPPATH'] = "include"
 envDebug.ParseConfig('pkg-config libxml++-2.6 glibmm-2.4 gtkmm-3.0 cairomm-1.0 pangomm-1.4 --cflags --libs')
 envDebug.Append(LIBS=['boost_system', 'boost_filesystem', 'sqlite3'])
 envDebug.Append(CPPPATH = ['../libepub++/include/'])
+envDebug.Append(CPPDEFINES=['DEBUG'])
  
 sources = Glob('build/debug/*.cpp') 
 sources += ['../libepub++/bin/libepub++-debug.a']

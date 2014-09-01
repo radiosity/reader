@@ -36,9 +36,10 @@ using namespace std;
 
 BookArea::BookArea() : pagenum(0), pages()
 {
+	#ifdef DEBUG
 	cout << "Created" << endl; 
-	
 	cout << "Loading book" << endl; 
+	#endif
 	
 	Paginator::load(pages, string("book"));
 	
