@@ -35,6 +35,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std; 
 
+namespace {
+	
+	inline Pango::FontDescription __get_font(string family, Pango::Weight weight, int size) {
+		
+		Pango::FontDescription font; 
+	
+		font.set_family(family);
+		font.set_weight(weight);
+		font.set_absolute_size(size*Pango::SCALE);
+		
+		return font; 
+		
+	}
+	
+}
+
 void DrawingUtils::draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr,
                             const int width, const int height)
 {
@@ -50,11 +66,7 @@ void DrawingUtils::draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr,
 
 void DrawingUtils::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, const int width, const int height, const ustring title, const int pagen) {
 	
-	Pango::FontDescription font; 
-	
-	font.set_family("EB Garamond");
-	font.set_weight(Pango::WEIGHT_ULTRALIGHT);
-	font.set_absolute_size(12*Pango::SCALE);
+	Pango::FontDescription font = __get_font("EB Garamond", Pango::WEIGHT_ULTRALIGHT, 12); 
 	font.set_variant(Pango::VARIANT_SMALL_CAPS);
 	
 	ustring parsed_txt;
@@ -101,11 +113,7 @@ int DrawingUtils::draw_h1(const Cairo::RefPtr<Cairo::Context>& cr, const ustring
                        const int rectangle_width, const int rectangle_height)
 {
 	
-	Pango::FontDescription font;
-
-	font.set_family("EB Garamond");
-	font.set_weight(Pango::WEIGHT_NORMAL);
-	font.set_absolute_size(72*Pango::SCALE);
+	Pango::FontDescription font = __get_font("EB Garamond", Pango::WEIGHT_NORMAL, 72); 
 	
 	ustring parsed_txt;
 	gunichar stuff;
@@ -132,27 +140,39 @@ int DrawingUtils::draw_h1(const Cairo::RefPtr<Cairo::Context>& cr, const ustring
 
 }
 
+namespace {
+	
+	Glib::RefPtr<Pango::Layout> __get_h2_layout(const Cairo::RefPtr<Cairo::Context>& cr, 
+										const ustring text,
+										const int rectangle_width, 
+										const int rectangle_height) 
+		{
+		
+			Pango::FontDescription font = __get_font("EB Garamond", Pango::WEIGHT_NORMAL, 40); 
+	
+			ustring parsed_txt;
+			gunichar stuff;
+
+			auto attributes = Pango::AttrList(text, 0, parsed_txt, stuff);
+
+			Glib::RefPtr<Pango::Layout> layout = Pango::Layout::create(cr);
+			layout->set_attributes(attributes);
+			layout->set_text(parsed_txt);
+			layout->set_font_description(font);
+			layout->set_alignment(Pango::Alignment::ALIGN_CENTER);
+			layout->set_width((rectangle_width * (1 - (2 * (DrawingUtils::MARGIN_PERCENT/100)))) * Pango::SCALE);
+			
+			return layout; 
+			
+		}
+	
+}
+
 bool DrawingUtils::will_fit_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text,
                        const int rectangle_width, const int rectangle_height, const int start_pos)
 {
 	
-	Pango::FontDescription font;
-
-	font.set_family("EB Garamond");
-	font.set_weight(Pango::WEIGHT_NORMAL);
-	font.set_absolute_size(40*Pango::SCALE);
-	
-	ustring parsed_txt;
-	gunichar stuff;
-
-	auto attributes = Pango::AttrList(text, 0, parsed_txt, stuff);
-
-	Glib::RefPtr<Pango::Layout> layout = Pango::Layout::create(cr);
-	layout->set_attributes(attributes);
-	layout->set_text(parsed_txt);
-	layout->set_font_description(font);
-	layout->set_alignment(Pango::Alignment::ALIGN_CENTER);
-	layout->set_width((rectangle_width * (1 - (2 * (MARGIN_PERCENT/100)))) * Pango::SCALE);
+	Glib::RefPtr<Pango::Layout> layout = __get_h2_layout(cr, text, rectangle_width, rectangle_height);
 	
 	int text_width;
 	int text_height;
@@ -171,23 +191,7 @@ int DrawingUtils::draw_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring
                        const int rectangle_width, const int rectangle_height, const int start_pos)
 {
 	
-	Pango::FontDescription font;
-
-	font.set_family("EB Garamond");
-	font.set_weight(Pango::WEIGHT_NORMAL);
-	font.set_absolute_size(40*Pango::SCALE);
-	
-	ustring parsed_txt;
-	gunichar stuff;
-
-	auto attributes = Pango::AttrList(text, 0, parsed_txt, stuff);
-
-	Glib::RefPtr<Pango::Layout> layout = Pango::Layout::create(cr);
-	layout->set_attributes(attributes);
-	layout->set_text(parsed_txt);
-	layout->set_font_description(font);
-	layout->set_alignment(Pango::Alignment::ALIGN_CENTER);
-	layout->set_width((rectangle_width * (1 - (2 * (MARGIN_PERCENT/100)))) * Pango::SCALE);
+	Glib::RefPtr<Pango::Layout> layout = __get_h2_layout(cr, text, rectangle_width, rectangle_height);
 	
 	int text_width;
 	int text_height;
@@ -202,28 +206,40 @@ int DrawingUtils::draw_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring
 
 }
 
+namespace {
+	
+	Glib::RefPtr<Pango::Layout> __get_text_layout(const Cairo::RefPtr<Cairo::Context>& cr, 
+										const ustring text,
+										const int rectangle_width, 
+										const int rectangle_height) 
+		{
+		
+			Pango::FontDescription font = __get_font("EB Garamond", Pango::WEIGHT_NORMAL, 16); 
+		
+			ustring parsed_txt;
+			gunichar stuff;
+
+			auto attributes = Pango::AttrList(text, 0, parsed_txt, stuff);
+
+			auto layout = Pango::Layout::create(cr);
+			layout->set_attributes(attributes);
+			layout->set_text(parsed_txt);
+			layout->set_font_description(font);
+			layout->set_width((rectangle_width * (1 - (2 * (DrawingUtils::MARGIN_PERCENT/100)))) * Pango::SCALE);
+			layout->set_indent(30 * Pango::SCALE);
+			layout->set_justify(true);
+					
+			return layout; 
+			
+		}
+	
+}
+
 bool DrawingUtils::will_fit_text(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text,
                        const int rectangle_width, const int rectangle_height, const int start_pos)
 {
 	
-	Pango::FontDescription font;
-
-	font.set_family("EB Garamond");
-	font.set_weight(Pango::WEIGHT_NORMAL);
-	font.set_absolute_size(16*Pango::SCALE);
-		
-	ustring parsed_txt;
-	gunichar stuff;
-
-	auto attributes = Pango::AttrList(text, 0, parsed_txt, stuff);
-
-	auto layout = Pango::Layout::create(cr);
-	layout->set_attributes(attributes);
-	layout->set_text(parsed_txt);
-	layout->set_font_description(font);
-	layout->set_width((rectangle_width * (1 - (2 * (MARGIN_PERCENT/100)))) * Pango::SCALE);
-	layout->set_indent(30 * Pango::SCALE);
-	layout->set_justify(true);
+	Glib::RefPtr<Pango::Layout> layout = __get_text_layout(cr, text, rectangle_width, rectangle_height);
 
 	int text_width;
 	int text_height;
@@ -381,46 +397,17 @@ pair<ustring, ustring> DrawingUtils::pack_text(const Cairo::RefPtr<Cairo::Contex
                        const int rectangle_width, const int rectangle_height, const int start_pos)
 {
 	
-	Pango::FontDescription font;
-
-	font.set_family("EB Garamond");
-	font.set_weight(Pango::WEIGHT_NORMAL);
-	font.set_absolute_size(16*Pango::SCALE);
-	
 	UstringSplitter2 tmp(text);
 	unsigned int nwords = tmp.nwords();
-	
-	auto working_layout = Pango::Layout::create(cr);
+
 	ustring working_text = "";
 	
 	for(unsigned int i = 0; i < nwords; i++) {
 	
 		ustring clipped_text = tmp.get(i+1);
 		
-		ustring parsed_txt;
-		gunichar stuff;
-
-		auto attributes = Pango::AttrList(clipped_text, 0, parsed_txt, stuff);
-
-		auto layout = Pango::Layout::create(cr);
-		layout->set_attributes(attributes);
-		layout->set_text(parsed_txt);
-		layout->set_font_description(font);
-		layout->set_width((rectangle_width * (1 - (2 * (MARGIN_PERCENT/100)))) * Pango::SCALE);
-		layout->set_indent(30 * Pango::SCALE);
-		layout->set_justify(true);
-
-		int text_width;
-		int text_height;
-
-		layout->get_pixel_size(text_width, text_height);
-		
-		int val = start_pos + text_height; 
-		int threshold = rectangle_height * (1 - (2 * (MARGIN_PERCENT/100)));
-
-		if(val <= threshold) {
+		if(will_fit_text(cr, clipped_text, rectangle_width, rectangle_height, start_pos)) {
 			//it fits;
-			working_layout = layout;
 			working_text = clipped_text; 
 		}
 		else {
@@ -431,13 +418,11 @@ pair<ustring, ustring> DrawingUtils::pack_text(const Cairo::RefPtr<Cairo::Contex
 				
 			}
 			else {
-				cr->move_to((rectangle_width * (MARGIN_PERCENT / 100)), start_pos + rectangle_height * (MARGIN_PERCENT * 2 / 100)/2);
-				//so, first, let's burn the previous working layout. 
-
-				working_layout->show_in_cairo_context(cr);
+				
+				//Draw it
+				draw_text(cr, working_text, rectangle_width, rectangle_height, start_pos); 
 				
 				//finally, return the fragment.
-				
 				return pair<ustring, ustring>(working_text, tmp.get_fragment(i));
 			}
 		}
@@ -453,31 +438,7 @@ int DrawingUtils::draw_text(const Cairo::RefPtr<Cairo::Context>& cr, const ustri
                        const int rectangle_width, const int rectangle_height, const int start_pos)
 {
 	
-	Pango::FontDescription font;
-
-	font.set_family("EB Garamond");
-	font.set_weight(Pango::WEIGHT_NORMAL);
-	font.set_absolute_size(16*Pango::SCALE);
-		
-	ustring parsed_txt;
-	gunichar stuff;
-
-	auto attributes = Pango::AttrList(text, 0, parsed_txt, stuff);
-
-	auto layout = Pango::Layout::create(cr);
-	layout->set_attributes(attributes);
-	layout->set_text(parsed_txt);
-	layout->set_font_description(font);
-	layout->set_width((rectangle_width * (1 - (2 * (MARGIN_PERCENT/100)))) * Pango::SCALE);
-	//if(first){
-	//	first = false; 
-	//}
-	//else {
-		layout->set_indent(30 * Pango::SCALE);
-	//}
-		
-	//layout->set_spacing(5 * Pango::SCALE);
-	layout->set_justify(true);
+	Glib::RefPtr<Pango::Layout> layout = __get_text_layout(cr, text, rectangle_width, rectangle_height);
 
 	int text_width;
 	int text_height;
@@ -496,11 +457,7 @@ int DrawingUtils::draw_fragment(const Cairo::RefPtr<Cairo::Context>& cr, const u
                        const int rectangle_width, const int rectangle_height, const int start_pos)
 {
 	
-	Pango::FontDescription font;
-
-	font.set_family("EB Garamond");
-	font.set_weight(Pango::WEIGHT_NORMAL);
-	font.set_absolute_size(16*Pango::SCALE);
+	Pango::FontDescription font = __get_font("EB Garamond", Pango::WEIGHT_NORMAL, 16); 
 		
 	ustring parsed_txt;
 	gunichar stuff;
