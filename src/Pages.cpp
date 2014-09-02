@@ -35,6 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <boost/filesystem.hpp>
 #include <thread>
 #include <sqlite3.h> 
+#include <cstdlib>
+#include <fstream>
 
 #include "DrawingUtils.hpp"
 
@@ -248,13 +250,26 @@ namespace {
 			
 			string filename = "pages/page";
 			filename += to_string(pagenum+1); 
-			filename += ".svg"; 
+			filename += ".png"; 
 		
 			const int width = 600;
 			const int height = 900;
 			
+			
+			/*
 			Cairo::RefPtr<Cairo::SvgSurface> surface =
 				Cairo::SvgSurface::create(filename, width, height);
+			Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
+			*/
+			
+			int stride;
+			unsigned char *data;
+			Cairo::RefPtr<Cairo::ImageSurface> surface;
+
+			stride = Cairo::ImageSurface::format_stride_for_width (Cairo::Format::FORMAT_ARGB32, width);
+			data = (unsigned char *) malloc (stride * height);
+			surface = Cairo::ImageSurface::create (data, Cairo::Format::FORMAT_ARGB32, width, height, stride);
+			
 			Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
 			
 			const int rectangle_width = width;
@@ -275,7 +290,7 @@ namespace {
 
 			int start_pos = 0; 
 
-			cr->set_source_rgb(0.33, 0.33, 1.0);
+			cr->set_source_rgb(0.15, 0.15, 0.15);
 
 			if(has_fragment) {
 				
@@ -385,6 +400,10 @@ namespace {
 			pages.add(pd);
 
 			cr->show_page();
+			
+			surface->write_to_png(filename);
+			
+			free(data);
 			
 		}	
 		
