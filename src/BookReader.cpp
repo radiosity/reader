@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-BookArea::BookArea() : pagenum(271)
+BookArea::BookArea() : pagenum(0)
 {
 	#ifdef DEBUG
 	cout << "Created" << endl; 

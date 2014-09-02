@@ -402,6 +402,13 @@ pair<ustring, ustring> DrawingUtils::pack_text(const Cairo::RefPtr<Cairo::Contex
 
 	ustring working_text = "";
 	
+	//Special case. If there's only one word, and we're calling pack text, 
+	//it clearly can't be packed. 
+	
+	if(nwords == 1) { 
+		return pair<ustring, ustring>(working_text, text); 
+	}
+	
 	for(unsigned int i = 0; i < nwords; i++) {
 	
 		ustring clipped_text = tmp.get(i+1);

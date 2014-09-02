@@ -42,7 +42,7 @@ Pages pages;
 int main(int argc, char* argv[])
 {
 	
-	Paginator::load(pages, string("book"));
+	Paginator::load(pages, string("book2"));
 	
 	RefPtr<Application> app = Application::create(argc, argv, "org.rmarti.dnd");
 
