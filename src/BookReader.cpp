@@ -34,14 +34,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-BookArea::BookArea() : pagenum(0), pages()
+BookArea::BookArea() : pagenum(271)
 {
 	#ifdef DEBUG
 	cout << "Created" << endl; 
 	cout << "Loading book" << endl; 
 	#endif
-	
-	Paginator::load(pages, string("book"));
 	
 }
 

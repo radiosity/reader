@@ -129,8 +129,10 @@ bool MainWindow::on_key_press_event(GdkEventKey* event)
 		cout << "Going forward one page to: " << m_reader.m_book_area.pagenum + 1 << endl; 
 		#endif
 		
-		m_reader.m_book_area.pagenum++; 
-		m_reader.m_book_area.queue_draw(); 
+		if(pages.is_valid_index(m_reader.m_book_area.pagenum + 1)) {
+			m_reader.m_book_area.pagenum++; 
+			m_reader.m_book_area.queue_draw(); 
+		}
 	}
 	
 	#ifdef DEBUG

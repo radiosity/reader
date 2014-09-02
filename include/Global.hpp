@@ -29,9 +29,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define GLOBAL_HEADER
 
 #include <gtkmm.h>
+#include "Pages.hpp"
 
 using namespace Gtk;
 
 extern HeaderBar * header_bar;
+
+extern Pages pages; 
 
 #endif

@@ -27,6 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "BookReader.hpp"
 #include "MainWindow.hpp"
+#include "Pages.hpp"
 
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
@@ -36,8 +37,12 @@ using namespace Gtk;
 
 HeaderBar * header_bar;
 
+Pages pages; 
+
 int main(int argc, char* argv[])
 {
+	
+	Paginator::load(pages, string("book"));
 	
 	RefPtr<Application> app = Application::create(argc, argv, "org.rmarti.dnd");
 

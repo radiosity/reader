@@ -133,6 +133,17 @@ bool Pages::available(const unsigned int n) const {
 	return n < descriptors.size();
 }
 
+bool Pages::is_valid_index(const unsigned int n) {
+	
+	unique_lock<mutex> lck(mtx); 
+	
+	if(finished) {
+		return n < descriptors.size();
+	}
+	else return true; 
+	
+}
+
 PageDescriptor Pages::get(const unsigned int n) {
 
 	unique_lock<mutex> lck(mtx); 
@@ -155,6 +166,22 @@ void Pages::add(PageDescriptor p) {
 	
 	descriptors.push_back(p); 
 	ready.notify_one(); 
+	
+}
+
+void Pages::set_finished_loading(bool val) {
+	
+	unique_lock<mutex> lck(mtx); 
+	
+	finished = val; 
+	
+}
+
+bool Pages::finished_loading() {
+	
+	unique_lock<mutex> lck(mtx); 
+
+	return finished; 
 	
 }
 
@@ -406,13 +433,15 @@ namespace {
 			
 		}	
 		
+		pages.set_finished_loading(true);
+		
 		sqlite3_exec(db, "END TRANSACTION", NULL, NULL, &errmsg);
 		
 		sqlite3_finalize(book_insert); 
 		sqlite3_close(db);
 		
 		#ifdef DEBUG
-		cout << "Done Loading" << endl; 
+		cout << "Done Loading Epub" << endl; 
 		#endif
 		
 	}		
@@ -480,9 +509,17 @@ namespace {
 			cout << "Database Error " << endl;
 		}
 		
+		pages.add(pd);
+		
+		pages.set_finished_loading(true);
+		
 		sqlite3_finalize(book_select); 
 		
 		sqlite3_close(db);
+		
+		#ifdef DEBUG
+		cout << "Done Loading SQLite" << endl; 
+		#endif
 		
 	}
 	

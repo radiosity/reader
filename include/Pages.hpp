@@ -90,7 +90,7 @@ class Pages {
 		mutex mtx; 
 		condition_variable ready; 
 		vector<PageDescriptor> descriptors; 
-		bool finished; 
+		bool finished;
 	
 		bool available(const unsigned int n) const; 	
 	
@@ -104,9 +104,11 @@ class Pages {
 			
 		~Pages(); 		
 		
+		bool is_valid_index(const unsigned int n); 
 		PageDescriptor get(const unsigned int n); 
 		void add(PageDescriptor p);
-	
+		void set_finished_loading(bool v); 
+		bool finished_loading(); 
 		void clear(); 
 	
 };
@@ -122,4 +124,4 @@ class Paginator
 	
 };
 
-#endif // BOOKREADER_H
+#endif 

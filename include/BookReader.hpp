@@ -36,6 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <Epub.hpp>
 
+#include "Global.hpp" 
 #include "Pages.hpp"
 
 using std::string; 
@@ -53,9 +54,6 @@ class BookArea : public Gtk::DrawingArea
 	protected:
 		//Override default signal handler:
 		virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
-
-	private:
-		Pages pages;
 
 };
 
