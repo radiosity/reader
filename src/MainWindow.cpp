@@ -39,7 +39,7 @@ MainWindow::MainWindow()
 	
 	set_icon_from_file("icon.png");
 	
-	add_events(Gdk::KEY_PRESS_MASK);
+	add_events(Gdk::KEY_PRESS_MASK | Gdk::SCROLL_MASK);
 	
 	// Window properties
 	//set_title("HeaderBar Example");
@@ -133,24 +133,59 @@ bool MainWindow::on_key_press_event(GdkEventKey* event)
 			m_reader.m_book_area.pagenum++; 
 			m_reader.m_book_area.queue_draw(); 
 		}
+		return true; 
+	}
+	
+	else if(event->keyval == GDK_KEY_Left)
+	{
+		if(m_reader.m_book_area.pagenum != 0) {
+			m_reader.m_book_area.pagenum--; 
+			m_reader.m_book_area.queue_draw(); 
+		}
+		return true; 
 	}
 	
 	#ifdef DEBUG
 	cout << "Waiting for keyboard event" << endl; 
 	#endif
+
+	//if the event has not been handled, call the base class
+	return Gtk::Window::on_key_press_event(event);
 	
-	if(event->keyval == GDK_KEY_Left)
+}
+
+bool MainWindow::on_scroll_event(GdkEventScroll * event) {
+	
+	#ifdef DEBUG
+	cout << "Scroll Event recieved" << endl; 
+	#endif
+	
+	if(event->direction == GDK_SCROLL_DOWN) {
+		#ifdef DEBUG
+		cout << "Going forward one page to: " << m_reader.m_book_area.pagenum + 1 << endl; 
+		#endif
+		
+		if(pages.is_valid_index(m_reader.m_book_area.pagenum + 1)) {
+			m_reader.m_book_area.pagenum++; 
+			m_reader.m_book_area.queue_draw(); 
+		}
+		return true; 
+	}
+	
+	else if(event->direction == GDK_SCROLL_UP)
 	{
-		//cout << "Left" << endl; 
 		if(m_reader.m_book_area.pagenum != 0) {
 			m_reader.m_book_area.pagenum--; 
 			m_reader.m_book_area.queue_draw(); 
 		}
+		return true; 
 	}
-	return true;
-
-	//if the event has not been handled, call the base class
-	return Gtk::Window::on_key_press_event(event);
+	
+	#ifdef DEBUG
+	cout << "Waiting for scroll event" << endl; 
+	#endif
+	
+	return Gtk::Window::on_scroll_event(event);
 	
 }
 
