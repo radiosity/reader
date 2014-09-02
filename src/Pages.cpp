@@ -36,7 +36,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <thread>
 #include <sqlite3.h> 
 #include <cstdlib>
-#include <fstream>
 
 #include "DrawingUtils.hpp"
 
