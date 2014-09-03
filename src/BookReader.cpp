@@ -98,7 +98,7 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 	return true;
 }
 
-BookReader::BookReader() : m_popover(m_book_area), m_popover_label("Go to page...") {
+BookReader::BookReader() : m_popover(m_book_area), m_popover_label("Go to page:") {
 	m_book_area.set_hexpand(true);
 	add(m_book_area);
 	
@@ -108,21 +108,22 @@ BookReader::BookReader() : m_popover(m_book_area), m_popover_label("Go to page..
 	m_popover_entry.set_text("");
 	m_popover_entry.signal_activate().connect(sigc::mem_fun(*this, &BookReader::on_goto_page));
 	
-	m_popover_grid.set_row_spacing(6);
-	m_popover_grid.set_column_spacing(6);
-	m_popover_grid.attach(m_popover_label, 1, 1, 1, 1);
-	m_popover_grid.attach(m_popover_entry, 1, 2, 1, 1);
+	m_popover_grid.set_row_spacing(0);
+	m_popover_grid.set_column_spacing(12);
+	m_popover_grid.attach(m_popover_label, 0, 0, 1, 1);
+	m_popover_grid.attach(m_popover_entry, 1, 0, 1, 1);
+	m_popover_grid.set_vexpand(true);
 	m_popover_grid.show_all();
 	
 	Gdk::Rectangle rect;
-	rect.set_x(550);
-	rect.set_y(850);
+	rect.set_x(545);
+	rect.set_y(865);
 	rect.set_width(1);
 	rect.set_height(1);
 	
 	m_popover.set_pointing_to(rect);
 	m_popover.add(m_popover_grid);
-	m_popover.set_position(Gtk::POS_TOP);
+	m_popover.set_position(Gtk::POS_LEFT);
 	m_popover.set_border_width(6);
 	m_popover.set_modal(true);
 	//m_popover.set_visible(true);
@@ -135,17 +136,26 @@ BookReader::~BookReader() {
 
 void BookReader::on_goto_page() {
 	
-	cout << "success" << endl; 
+	#ifdef DEBUG
+	cout << "Updating page via popover callback" << endl; 
+	#endif
 	
 	ustring r = m_popover_entry.get_text();
-	unsigned int page = std::stoi(r.raw());
-	m_book_area.pagenum = page - 1; 
-	m_book_area.queue_draw(); 
-	
 	
 	m_popover_entry.set_text("");
-	
 	m_popover.set_visible(false);
+	
+	try{
+		unsigned int page = std::stoi(r.raw());
+		m_book_area.pagenum = page - 1; 
+		m_book_area.queue_draw(); 
+	}
+	
+	catch(std::invalid_argument e) {
+		#ifdef DEBUG
+		cout << "Could not convert, text was " << r << endl;
+		#endif
+	}
 	
 }
 
