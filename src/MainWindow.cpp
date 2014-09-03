@@ -138,6 +138,10 @@ bool MainWindow::on_key_press_event(GdkEventKey* event)
 	
 	else if(event->keyval == GDK_KEY_Left)
 	{
+		#ifdef DEBUG
+		cout << "Going backward one page to: " << m_reader.m_book_area.pagenum - 1 << endl; 
+		#endif
+		
 		if(m_reader.m_book_area.pagenum != 0) {
 			m_reader.m_book_area.pagenum--; 
 			m_reader.m_book_area.queue_draw(); 
@@ -145,10 +149,6 @@ bool MainWindow::on_key_press_event(GdkEventKey* event)
 		return true; 
 	}
 	
-	#ifdef DEBUG
-	cout << "Waiting for keyboard event" << endl; 
-	#endif
-
 	//if the event has not been handled, call the base class
 	return Gtk::Window::on_key_press_event(event);
 	
@@ -174,16 +174,16 @@ bool MainWindow::on_scroll_event(GdkEventScroll * event) {
 	
 	else if(event->direction == GDK_SCROLL_UP)
 	{
+		#ifdef DEBUG
+		cout << "Going backward one page to: " << m_reader.m_book_area.pagenum - 1 << endl; 
+		#endif
+		
 		if(m_reader.m_book_area.pagenum != 0) {
 			m_reader.m_book_area.pagenum--; 
 			m_reader.m_book_area.queue_draw(); 
 		}
 		return true; 
 	}
-	
-	#ifdef DEBUG
-	cout << "Waiting for scroll event" << endl; 
-	#endif
 	
 	return Gtk::Window::on_scroll_event(event);
 	
