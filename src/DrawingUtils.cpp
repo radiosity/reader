@@ -425,7 +425,6 @@ pair<ustring, ustring> DrawingUtils::pack_text(const Cairo::RefPtr<Cairo::Contex
 				
 			}
 			else {
-				
 				//Draw it
 				draw_text(cr, working_text, rectangle_width, rectangle_height, start_pos); 
 				

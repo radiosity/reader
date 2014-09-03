@@ -84,9 +84,9 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 		if(pci.pct == PAGE_H1) start_pos += DrawingUtils::draw_h1(cr, pci.content, rectangle_width, rectangle_height); 
 		else if(pci.pct == PAGE_H2) {
 			// Only pack out the header when it's not the first thing in the page
-			if (itemid != 0) start_pos += 30;
+			if (itemid != 0) start_pos += 35;
 			start_pos +=DrawingUtils::draw_h2(cr, pci.content, rectangle_width, rectangle_height, start_pos); 
-			start_pos += 30;
+			start_pos += 35;
 		}
 		else if(pci.pct == PAGE_PARAGRAPH) start_pos += DrawingUtils::draw_text(cr, pci.content, rectangle_width, rectangle_height, start_pos);
 		else if(pci.pct == PAGE_FRAGMENT) start_pos += DrawingUtils::draw_fragment(cr, pci.content, rectangle_width, rectangle_height, start_pos);
@@ -94,19 +94,60 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 		itemid++; 
 		
 	}
-
+	
 	return true;
 }
 
-BookReader::BookReader() {
+BookReader::BookReader() : m_popover(m_book_area), m_popover_label("Go to page...") {
 	m_book_area.set_hexpand(true);
 	add(m_book_area);
+	
+	//m_entry.set_max_length(10);
+	m_popover_entry.set_width_chars(4);
+	m_popover_entry.set_max_width_chars(4);
+	m_popover_entry.set_text("");
+	m_popover_entry.signal_activate().connect(sigc::mem_fun(*this, &BookReader::on_goto_page));
+	
+	m_popover_grid.set_row_spacing(6);
+	m_popover_grid.set_column_spacing(6);
+	m_popover_grid.attach(m_popover_label, 1, 1, 1, 1);
+	m_popover_grid.attach(m_popover_entry, 1, 2, 1, 1);
+	m_popover_grid.show_all();
+	
+	Gdk::Rectangle rect;
+	rect.set_x(550);
+	rect.set_y(850);
+	rect.set_width(1);
+	rect.set_height(1);
+	
+	m_popover.set_pointing_to(rect);
+	m_popover.add(m_popover_grid);
+	m_popover.set_position(Gtk::POS_TOP);
+	m_popover.set_border_width(6);
+	m_popover.set_modal(true);
+	//m_popover.set_visible(true);
+	
 }
 	
 BookReader::~BookReader() {
 	
 }
 
+void BookReader::on_goto_page() {
+	
+	cout << "success" << endl; 
+	
+	ustring r = m_popover_entry.get_text();
+	unsigned int page = std::stoi(r.raw());
+	m_book_area.pagenum = page - 1; 
+	m_book_area.queue_draw(); 
+	
+	
+	m_popover_entry.set_text("");
+	
+	m_popover.set_visible(false);
+	
+}
 
 
 

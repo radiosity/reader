@@ -363,9 +363,9 @@ namespace {
 						pd.items.push_back(PageContentItem(PAGE_H2, c.content));
 						
 						// Only pack out the header when it's not the first thing in the page
-						if (itemid != 0) start_pos += 30;
+						if (itemid != 0) start_pos += 35;
 						start_pos += DrawingUtils::draw_h2(cr, c.content, rectangle_width, rectangle_height, start_pos); 
-						start_pos += 30; 
+						start_pos += 35; 
 					}
 					else {
 						epub_content_index--;

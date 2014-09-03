@@ -149,6 +149,21 @@ bool MainWindow::on_key_press_event(GdkEventKey* event)
 		return true; 
 	}
 	
+	 /*if (event->type == GDK_KEY_PRESS &&
+    event->keyval == GDK_KEY_1 &&
+    (event->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)) == GDK_MOD1_MASK)*/
+  
+	
+	else if(event->keyval == GDK_KEY_g && (event->state & (GDK_CONTROL_MASK)) == GDK_CONTROL_MASK) {
+		
+		#ifdef DEBUG
+		cout << "Recieved ctrl-g, launching goto popover" << endl; 
+		#endif
+		
+		m_reader.m_popover.set_visible(true);
+		
+	}
+	
 	//if the event has not been handled, call the base class
 	return Gtk::Window::on_key_press_event(event);
 	

@@ -31,6 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/box.h>
 #include <gtkmm/window.h>
+#include <gtkmm/popover.h>
+#include <gtkmm/entry.h>
+#include <gtkmm/grid.h>
+#include <gtkmm/label.h>
 #include <string>
 #include <vector>
 
@@ -59,11 +63,19 @@ class BookArea : public Gtk::DrawingArea
 
 class BookReader : public Gtk::Box {
 	
-public:
-	BookReader();
-	~BookReader();
+	protected:
+		void on_goto_page();
+	
+	public:
+		BookReader();
+		~BookReader();
 
-	BookArea m_book_area;
+		BookArea m_book_area;
+		Popover m_popover;
+		Label m_popover_label;
+		Entry m_popover_entry; 
+		Grid m_popover_grid;
+	
 
 };
 
