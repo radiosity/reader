@@ -42,9 +42,9 @@ Pages pages;
 int main(int argc, char* argv[])
 {
 	
-	Paginator::load(pages, string("book2"));
+	Paginator::load(pages, string("book"));
 	
-	RefPtr<Application> app = Application::create(argc, argv, "org.rmarti.dnd");
+	RefPtr<Application> app = Application::create(argc, argv, "org.rmarti.reader");
 
 	MainWindow window;
 
