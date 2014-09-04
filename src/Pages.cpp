@@ -38,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cstdlib>
 
 #include "DrawingUtils.hpp"
+#include "Global.hpp"
 
 using namespace std;
 using namespace boost::filesystem;
@@ -201,6 +202,8 @@ void Pages::clear() {
 namespace {
 	
 	void __load_epub(Pages &pages, path filename, path dbfilename) {
+		
+		unique_lock<mutex> import_lock(import_mtx); 
 		
 		//Yield to the interface thread if this one is
 		//executing first. 
@@ -448,6 +451,8 @@ namespace {
 	
 	void __load_sqlite(Pages &pages, path filename) {
 		
+		unique_lock<mutex> import_lck(import_mtx); 
+		
 		//Yield to the interface thread if this one is
 		//executing first.
 		std::this_thread::yield();
@@ -520,6 +525,8 @@ namespace {
 		#ifdef DEBUG
 		cout << "Done Loading SQLite" << endl; 
 		#endif
+		
+		import_mtx.unlock();
 		
 	}
 	

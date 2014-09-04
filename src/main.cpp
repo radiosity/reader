@@ -31,13 +31,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
+#include <mutex>
 
 using namespace Glib;
 using namespace Gtk;
+using std::mutex; 
+using std::unique_lock;
 
 HeaderBar * header_bar;
 
 Pages pages; 
+
+mutex import_mtx; 
 
 int main(int argc, char* argv[])
 {
@@ -48,6 +53,9 @@ int main(int argc, char* argv[])
 
 	MainWindow window;
 
-	return app->run(window);
+	int ret = app->run(window);
 	
+	unique_lock<mutex> lck(import_mtx); 
+	
+	return ret; 
 }
