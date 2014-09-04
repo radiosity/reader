@@ -129,6 +129,9 @@ bool MainWindow::on_key_press_event(GdkEventKey* event)
 		cout << "Going forward one page to: " << m_reader.m_book_area.pagenum + 1 << endl; 
 		#endif
 		
+		//Hide the page seek popover, if open:
+		m_reader.m_popover.set_visible(false);
+		
 		if(pages.is_valid_index(m_reader.m_book_area.pagenum + 1)) {
 			m_reader.m_book_area.pagenum++; 
 			m_reader.m_book_area.queue_draw(); 
@@ -141,6 +144,9 @@ bool MainWindow::on_key_press_event(GdkEventKey* event)
 		#ifdef DEBUG
 		cout << "Going backward one page to: " << m_reader.m_book_area.pagenum - 1 << endl; 
 		#endif
+		
+		//Hide the page seek popover, if open:
+		m_reader.m_popover.set_visible(false);
 		
 		if(m_reader.m_book_area.pagenum != 0) {
 			m_reader.m_book_area.pagenum--; 
@@ -175,6 +181,9 @@ bool MainWindow::on_scroll_event(GdkEventScroll * event) {
 	#ifdef DEBUG
 	cout << "Scroll Event recieved" << endl; 
 	#endif
+	
+	//Hide the page seek popover, if open:
+	m_reader.m_popover.set_visible(false);
 	
 	if(event->direction == GDK_SCROLL_DOWN) {
 		#ifdef DEBUG
