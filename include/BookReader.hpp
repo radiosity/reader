@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <gtkmm/window.h>
 #include <gtkmm/popover.h>
 #include <gtkmm/entry.h>
-#include <gtkmm/grid.h>
+#include <gtkmm/box.h>
 #include <gtkmm/label.h>
 #include <string>
 #include <vector>
@@ -75,7 +75,7 @@ class BookReader : public Gtk::Box {
 		Popover m_popover;
 		Label m_popover_label;
 		Entry m_popover_entry; 
-		Grid m_popover_grid;
+		Box m_popover_box;
 	
 
 };
