@@ -103,6 +103,7 @@ BookReader::BookReader() :
 	m_popover_label("Go to page:"),
 	m_popover_box(Gtk::ORIENTATION_HORIZONTAL, 12)
 {
+	
 	m_book_area.set_hexpand(true);
 	add(m_book_area);
 	
@@ -112,14 +113,11 @@ BookReader::BookReader() :
 	m_popover_entry.set_text("");
 	m_popover_entry.signal_activate().connect(sigc::mem_fun(*this, &BookReader::on_goto_page));
 	
-	
-	
 	m_popover_box.set_vexpand(true);
 	m_popover_box.set_hexpand(true);
 	m_popover_box.pack_start(m_popover_label);
 	m_popover_box.pack_start(m_popover_entry);
 	m_popover_box.show_all();
-	
 	
 	//m_popover.add_label("Sup holmes");
 	m_popover.add(m_popover_box);
