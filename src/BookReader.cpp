@@ -70,7 +70,7 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 	//auto it = book.opf_files[0].metadata.find(MetadataType::TITLE);
 	//const ustring title = it->second.contents;
 	cr->set_source_rgb(0.5, 0.5, 0.5);	
-	DrawingUtils::draw_header(cr, rectangle_width, rectangle_height, "Pride and Prejudice", pagenum + 1);
+	page_num_rect = DrawingUtils::draw_header(cr, rectangle_width, rectangle_height, "Pride and Prejudice", pagenum + 1);
 	
 	cr->set_source_rgb(0.15, 0.15, 0.15);
 	//cr->set_source_rgb(1, 0.33, 0.33);
@@ -108,25 +108,28 @@ BookReader::BookReader() : m_popover(m_book_area), m_popover_label("Go to page:"
 	m_popover_entry.set_text("");
 	m_popover_entry.signal_activate().connect(sigc::mem_fun(*this, &BookReader::on_goto_page));
 	
-	m_popover_grid.set_row_spacing(0);
-	m_popover_grid.set_column_spacing(12);
-	m_popover_grid.attach(m_popover_label, 0, 0, 1, 1);
-	m_popover_grid.attach(m_popover_entry, 1, 0, 1, 1);
 	m_popover_grid.set_vexpand(true);
+	m_popover_grid.set_hexpand(true);
+	m_popover_grid.set_row_spacing(0);
+	m_popover_grid.remove_row(1);
+	m_popover_grid.set_row_baseline_position(1, BASELINE_POSITION_CENTER);
+	m_popover_grid.set_baseline_row(0);
+	m_popover_grid.set_column_spacing(12);
+	m_popover_grid.set_row_homogeneous(true);
+	m_popover_grid.attach(m_popover_label, 0, 1, 1, 1);
+	m_popover_grid.attach(m_popover_entry, 1, 1, 1, 1);
 	m_popover_grid.show_all();
 	
-	Gdk::Rectangle rect;
-	rect.set_x(545);
-	rect.set_y(865);
-	rect.set_width(1);
-	rect.set_height(1);
 	
-	m_popover.set_pointing_to(rect);
+	//m_popover.add_label("Sup holmes");
 	m_popover.add(m_popover_grid);
 	m_popover.set_position(Gtk::POS_LEFT);
-	m_popover.set_border_width(6);
+	m_popover.set_border_width(8);
 	m_popover.set_modal(true);
 	//m_popover.set_visible(true);
+	
+	auto stylecontext = m_popover.get_style_context();
+	stylecontext->add_class(GTK_STYLE_CLASS_INFO);
 	
 }
 	

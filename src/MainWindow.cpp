@@ -160,6 +160,7 @@ bool MainWindow::on_key_press_event(GdkEventKey* event)
 		cout << "Recieved ctrl-g, launching goto popover" << endl; 
 		#endif
 		
+		m_reader.m_popover.set_pointing_to(m_reader.m_book_area.page_num_rect);
 		m_reader.m_popover.set_visible(true);
 		
 	}

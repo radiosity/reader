@@ -64,10 +64,10 @@ void DrawingUtils::draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr,
 	
 }
 
-void DrawingUtils::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, const int width, const int height, const ustring title, const int pagen) {
+Gdk::Rectangle DrawingUtils::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, const int width, const int height, const ustring title, const int pagen) {
 	
 	Pango::FontDescription font = __get_font("EB Garamond", Pango::WEIGHT_ULTRALIGHT, 12); 
-	font.set_variant(Pango::VARIANT_SMALL_CAPS);
+	//font.set_variant(Pango::VARIANT_SMALL_CAPS);
 	
 	ustring parsed_txt;
 	gunichar stuff;
@@ -100,11 +100,21 @@ void DrawingUtils::draw_header(const Cairo::RefPtr<Cairo::Context>& cr, const in
 
 	layout->get_pixel_size(text_width, text_height);
 	
-	double position = width - ((width * (MARGIN_PERCENT / 100)) + text_width);
+	double width_position = width - ((width * (MARGIN_PERCENT / 100)) + text_width);
+	double height_position = height - (height * (MARGIN_PERCENT / 200)) - (text_height/2);
 	
-	cr->move_to(position, height - (height * (MARGIN_PERCENT / 200)) - text_height);
-
+	cr->set_source_rgb(0.15,0.15,0.15);
+	cr->move_to(width_position, height_position);
+	
 	layout->show_in_cairo_context(cr);
+	
+	Gdk::Rectangle rect;
+	rect.set_x(width_position - 5);
+	rect.set_y(height - (height * (MARGIN_PERCENT / 200)));
+	rect.set_width(1);
+	rect.set_height(1);	
+	
+	return rect;
 
 
 }

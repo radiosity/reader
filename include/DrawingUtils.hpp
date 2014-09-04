@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cairomm/cairomm.h>
 #include <pangomm.h>
 #include <glibmm.h>
+#include <gtkmm.h>
 #include <string>
 #include <vector>
 #include <utility>
@@ -50,7 +51,7 @@ class DrawingUtils {
 		static constexpr double PHI = 1.618033988749894848204586834365638117720309179805762862135448;	
 	
 		static void draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height);
-		static void draw_header(const Cairo::RefPtr<Cairo::Context>& cr, const int width, const int height, const ustring title, const int pagen);
+		static Gdk::Rectangle draw_header(const Cairo::RefPtr<Cairo::Context>& cr, const int width, const int height, const ustring title, const int pagen);
 		static int draw_h1(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height);
 		static bool will_fit_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
 		static int draw_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);

@@ -54,6 +54,7 @@ class BookArea : public Gtk::DrawingArea
 		virtual ~BookArea();
 	
 		int pagenum;
+		Gdk::Rectangle page_num_rect;
 
 	protected:
 		//Override default signal handler:
