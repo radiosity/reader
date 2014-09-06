@@ -35,6 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <gtkmm/entry.h>
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
+#include <gtkmm/infobar.h>
+#include <gtkmm/spinner.h>
 #include <string>
 #include <vector>
 
@@ -66,17 +68,26 @@ class BookReader : public Gtk::Box {
 	
 	protected:
 		void on_goto_page();
+		void on_infobar_response(int);
+	
+		void info_bar_loading(); 
+		void info_bar_hide();
 	
 	public:
 		BookReader();
 		~BookReader();
 
+		InfoBar m_infobar;
+		Box m_infobar_box; 
+		Spinner m_infobar_spinner; 
+		Label m_infobar_label;
+		
 		BookArea m_book_area;
 		Popover m_popover;
 		Label m_popover_label;
 		Entry m_popover_entry; 
 		Box m_popover_box;
-	
+		Box m_box;
 
 };
 

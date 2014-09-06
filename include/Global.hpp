@@ -35,11 +35,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Pages.hpp"
 
 using namespace Gtk;
+using namespace Glib; 
 
 extern HeaderBar * header_bar;
 
 extern Pages pages; 
 
 extern mutex import_mtx;
+
+extern Dispatcher info_bar_hide_dispatcher;
 
 #endif

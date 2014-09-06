@@ -39,9 +39,9 @@ using std::mutex;
 using std::unique_lock;
 
 HeaderBar * header_bar;
+Dispatcher info_bar_hide_dispatcher;
 
 Pages pages; 
-
 mutex import_mtx; 
 
 int main(int argc, char* argv[])

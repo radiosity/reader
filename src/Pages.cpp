@@ -443,6 +443,8 @@ namespace {
 		sqlite3_finalize(book_insert); 
 		sqlite3_close(db);
 		
+		info_bar_hide_dispatcher.emit();
+		
 		#ifdef DEBUG
 		cout << "Done Loading Epub" << endl; 
 		#endif
@@ -526,8 +528,6 @@ namespace {
 		cout << "Done Loading SQLite" << endl; 
 		#endif
 		
-		import_mtx.unlock();
-		
 	}
 	
 } //end of anonymous namespace
@@ -563,8 +563,11 @@ void Paginator::load(Pages &pages, string filename) {
 	}
 	else {
 		//Good, we can load from SQLite and we don't have to do any parsing. 
-		thread t(__load_sqlite, ref(pages), databasefile);
-		t.detach();
+		//thread t(__load_sqlite, ref(pages), databasefile);
+		//t.detach();
+		
+		__load_sqlite(pages, databasefile);
+		
 	}
 			
 }

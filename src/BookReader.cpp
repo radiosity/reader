@@ -36,6 +36,11 @@ using namespace std;
 
 BookArea::BookArea() : pagenum(0)
 {
+	
+	//set_border_width(15);
+	
+	set_size_request(600,900);
+	
 	#ifdef DEBUG
 	cout << "Created" << endl; 
 	cout << "Loading book" << endl; 
@@ -103,9 +108,35 @@ BookReader::BookReader() :
 	m_popover_label("Go to page:"),
 	m_popover_box(Gtk::ORIENTATION_HORIZONTAL, 12)
 {
+
+	//sort out signal handlers. 
+	info_bar_hide_dispatcher.connect(sigc::mem_fun(*this, &BookReader::info_bar_hide));
+
+	set_orientation(ORIENTATION_VERTICAL);
+	
+	
+	m_infobar_label.set_text("");
+	m_infobar_box.set_orientation(ORIENTATION_HORIZONTAL);
+	m_infobar_box.set_spacing(12);
+	m_infobar_box.pack_start(m_infobar_spinner);
+	m_infobar_box.pack_start(m_infobar_label);
+	m_infobar_box.show_all();
+	Gtk::Container* infoBarContainer =
+	dynamic_cast<Gtk::Container*>(m_infobar.get_content_area());
+	if (infoBarContainer)	{
+		infoBarContainer->add(m_infobar_box);
+	}
+	m_infobar.set_no_show_all(true);
+	m_infobar.set_show_close_button(true);
+	m_infobar.signal_response().connect(sigc::mem_fun( *this, &BookReader::on_infobar_response) );
+	
+	pack_start(m_infobar, Gtk::PACK_SHRINK);
 	
 	m_book_area.set_hexpand(true);
-	add(m_book_area);
+	m_box.pack_start(m_book_area);
+	m_box.set_border_width(15);
+	
+	pack_start(m_box);
 	
 	//m_entry.set_max_length(10);
 	m_popover_entry.set_width_chars(4);
@@ -129,10 +160,34 @@ BookReader::BookReader() :
 	auto stylecontext = m_popover.get_style_context();
 	stylecontext->add_class(GTK_STYLE_CLASS_INFO);
 	
+	if(!pages.finished_loading()) {
+		info_bar_loading();
+	}
+	else {
+		info_bar_hide();
+	}
+	
 }
 	
 BookReader::~BookReader() {
 	
+}
+
+void BookReader::on_infobar_response(int)
+{
+	info_bar_hide();
+}
+
+void BookReader::info_bar_loading() {
+	m_infobar_label.set_text("Importing new book into Library, this may take time...");
+	m_infobar_spinner.start();
+	m_infobar.show();
+}
+
+void BookReader::info_bar_hide() {
+	m_infobar_label.set_text("");
+	m_infobar_spinner.stop();
+	m_infobar.hide();
 }
 
 void BookReader::on_goto_page() {
@@ -159,8 +214,6 @@ void BookReader::on_goto_page() {
 	}
 	
 }
-
-
 
 
 
