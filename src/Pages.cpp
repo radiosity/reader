@@ -351,12 +351,29 @@ namespace {
 				epub_content_index++; 
 				
 				if(c.type == H1) {
-					sqlite3_bind_int(book_insert, 3, PAGE_H1);
-					sqlite3_bind_text(book_insert, 4, c.content.c_str(), -1, SQLITE_STATIC);	
 					
-					pd.items.push_back(PageContentItem(PAGE_H1, c.content));
+					//There should be only one H1 on a page. To make sure
+					//of this, we're going to push an H1 onto a new page the current 
+					//page contains any content, and then we're going to push a new page afterwards. 
 					
-					start_pos += DrawingUtils::draw_h1(cr, c.content, rectangle_width, rectangle_height); 
+					if(pd.items.size() != 0) {
+						epub_content_index--;
+						break;
+					}
+					else {
+					
+						sqlite3_bind_int(book_insert, 3, PAGE_H1);
+						sqlite3_bind_text(book_insert, 4, c.content.c_str(), -1, SQLITE_STATIC);	
+						
+						pd.items.push_back(PageContentItem(PAGE_H1, c.content));
+						
+						start_pos += DrawingUtils::draw_h1(cr, c.content, rectangle_width, rectangle_height); 
+						
+						//ensure that there's only one H1 on a page. 
+						break; 
+						
+					}
+					
 				}
 				else if (c.type == H2) {
 					if(DrawingUtils::will_fit_h2(cr, c.content, rectangle_width, rectangle_height, start_pos)) {
