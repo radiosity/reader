@@ -431,7 +431,14 @@ namespace {
 					}
 				}
 				else if (c.type == HR) {
-					break; 
+					if(pd.items.size() == 0) {
+						//If there's nothing on the page, then forcing a new page is unnecessary. 
+						//So we ignore it. 
+						continue;
+					}
+					else{
+						break;
+					}						
 				}
 				
 				int result = sqlite3_step(book_insert);
