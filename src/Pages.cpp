@@ -225,11 +225,12 @@ namespace {
 			//Failed to open
 		}
 		
-		const string table_sql = "CREATE TABLE book("  \
+		const string table_sql = "CREATE VIRTUAL TABLE book USING fts4("  \
 							"pagen INT NOT NULL," \
 							"descriptorid INT NOT NULL," \
 							"contenttype INT NOT NULL," \
-							"content TEXT NOT NULL ) ;";
+							"contentformatted TEXT NOT NULL," \
+							"contentstripped TEXT NOT NULL, ) ;";
 		
 		sqlite3_stmt * tmpstmt;
 		
@@ -241,7 +242,7 @@ namespace {
 		
 		//Table created. 
 		
-		const string book_insert_sql = "INSERT INTO book (pagen, descriptorid, contenttype, content) VALUES (?, ?, ?, ?);";
+		const string book_insert_sql = "INSERT INTO book (pagen, descriptorid, contenttype, contentformatted, contentstripped) VALUES (?, ?, ?, ?, ?);";
 		sqlite3_stmt * book_insert; 
 		
 		rc = sqlite3_prepare_v2(db, book_insert_sql.c_str(), -1, &book_insert, 0);
@@ -364,6 +365,7 @@ namespace {
 					
 						sqlite3_bind_int(book_insert, 3, PAGE_H1);
 						sqlite3_bind_text(book_insert, 4, c.content.c_str(), -1, SQLITE_STATIC);	
+						sqlite3_bind_text(book_insert, 5, c.stripped_content.c_str(), -1, SQLITE_STATIC);	
 						
 						pd.items.push_back(PageContentItem(PAGE_H1, c.content));
 						
@@ -379,6 +381,7 @@ namespace {
 					if(DrawingUtils::will_fit_h2(cr, c.content, rectangle_width, rectangle_height, start_pos)) {
 						sqlite3_bind_int(book_insert, 3, PAGE_H2);
 						sqlite3_bind_text(book_insert, 4, c.content.c_str(), -1, SQLITE_STATIC);
+						sqlite3_bind_text(book_insert, 5, c.stripped_content.c_str(), -1, SQLITE_STATIC);	
 						
 						pd.items.push_back(PageContentItem(PAGE_H2, c.content));
 						
@@ -397,6 +400,7 @@ namespace {
 					if(DrawingUtils::will_fit_text(cr, c.content, rectangle_width, rectangle_height, start_pos)) {
 						sqlite3_bind_int(book_insert, 3, PAGE_PARAGRAPH);
 						sqlite3_bind_text(book_insert, 4, c.content.c_str(), -1, SQLITE_STATIC);
+						sqlite3_bind_text(book_insert, 5, c.stripped_content.c_str(), -1, SQLITE_STATIC);	
 						
 						pd.items.push_back(PageContentItem(PAGE_PARAGRAPH, c.content));
 						
@@ -416,6 +420,7 @@ namespace {
 							
 							sqlite3_bind_int(book_insert, 3, PAGE_PARAGRAPH);
 							sqlite3_bind_text(book_insert, 4, packres.first.c_str(), -1, SQLITE_STATIC);
+							sqlite3_bind_text(book_insert, 5, c.stripped_content.c_str(), -1, SQLITE_STATIC);	
 						
 							//We will need to break out of the loop under this condition, 
 							//but if we do then we haven't saved the info in the database. 
@@ -461,6 +466,15 @@ namespace {
 		}	
 		
 		pages.set_finished_loading(true);
+		
+		const string book_optimise_sql = "INSERT INTO book(book) VALUES('optimize');";
+		sqlite3_stmt * book_optimise;  
+		
+		rc = sqlite3_prepare_v2(db, book_optimise_sql.c_str(), -1, &book_optimise, 0);
+		if(rc != SQLITE_OK && rc != SQLITE_DONE) throw -1;
+		rc = sqlite3_step(book_optimise);
+		if(rc != SQLITE_OK && rc != SQLITE_DONE) throw -1;
+		sqlite3_finalize(book_optimise);
 		
 		sqlite3_exec(db, "END TRANSACTION", NULL, NULL, &errmsg);
 		
