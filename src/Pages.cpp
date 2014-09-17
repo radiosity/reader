@@ -230,7 +230,7 @@ namespace {
 							"descriptorid INT NOT NULL," \
 							"contenttype INT NOT NULL," \
 							"contentformatted TEXT NOT NULL," \
-							"contentstripped TEXT NOT NULL, ) ;";
+							"contentstripped TEXT NOT NULL ) ;";
 		
 		sqlite3_stmt * tmpstmt;
 		
