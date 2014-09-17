@@ -262,6 +262,7 @@ namespace {
 		
 		bool has_fragment = false; 
 		ustring fragment = "";
+		ustring fragment_stripped = "";
 		
 		unsigned int pagenum = 0; 
 		unsigned int itemid = 0; 
@@ -328,6 +329,7 @@ namespace {
 				sqlite3_bind_int(book_insert, 2, itemid);
 				sqlite3_bind_int(book_insert, 3, PAGE_FRAGMENT);
 				sqlite3_bind_text(book_insert, 4, fragment.c_str(), -1, SQLITE_STATIC);
+				sqlite3_bind_text(book_insert, 5, fragment_stripped.c_str(), -1, SQLITE_STATIC);
 
 				int result = sqlite3_step(book_insert);
 				if(result != SQLITE_OK && result != SQLITE_ROW && result != SQLITE_DONE) throw -1;
@@ -339,6 +341,7 @@ namespace {
 				has_fragment = false; 
 				start_pos += DrawingUtils::draw_fragment(cr, fragment, rectangle_width, rectangle_height, start_pos); 
 				fragment = "";
+				fragment_stripped = "";
 				
 				itemid++;
 			}
@@ -409,6 +412,7 @@ namespace {
 					else {
 						pair<ustring, ustring> packres = DrawingUtils::pack_text(cr, c.content, rectangle_width, rectangle_height, start_pos);
 						fragment = packres.second; 
+						fragment_stripped = packres.second; // This doesn't work under all circumstances
 						if(fragment.compare(c.content) == 0) {
 							//can't pack the content. Go back one, and set a new page, so we do all this again. 
 							epub_content_index--; 
@@ -420,7 +424,7 @@ namespace {
 							
 							sqlite3_bind_int(book_insert, 3, PAGE_PARAGRAPH);
 							sqlite3_bind_text(book_insert, 4, packres.first.c_str(), -1, SQLITE_STATIC);
-							sqlite3_bind_text(book_insert, 5, c.stripped_content.c_str(), -1, SQLITE_STATIC);	
+							sqlite3_bind_text(book_insert, 5, packres.first.c_str(), -1, SQLITE_STATIC);	
 						
 							//We will need to break out of the loop under this condition, 
 							//but if we do then we haven't saved the info in the database. 
