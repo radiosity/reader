@@ -397,13 +397,16 @@ namespace {
 					}
 					else {
 
+						//I don't like people messing with formatting in headers. So here we're going to use 
+						//the stripped text for everything and remove the formatting
+						
 						sqlite3_bind_int(book_insert, 3, PAGE_H1);
-						sqlite3_bind_text(book_insert, 4, c.content.c_str(), -1, SQLITE_STATIC);
+						sqlite3_bind_text(book_insert, 4, c.stripped_content.c_str(), -1, SQLITE_STATIC);
 						sqlite3_bind_text(book_insert, 5, c.stripped_content.c_str(), -1, SQLITE_STATIC);
 
-						pd.items.push_back(PageContentItem(PAGE_H1, c.content));
-
-						start_pos += DrawingUtils::draw_h1(cr, c.content, rectangle_width, rectangle_height);
+						pd.items.push_back(PageContentItem(PAGE_H1, c.stripped_content));
+						
+						start_pos += DrawingUtils::draw_h1(cr, c.stripped_content, rectangle_width, rectangle_height);
 
 						//ensure that there's only one H1 on a page.
 						break;
@@ -413,18 +416,22 @@ namespace {
 				}
 				else if (c.type == H2) {
 					if(DrawingUtils::will_fit_h2(cr, c.content, rectangle_width, rectangle_height, start_pos)) {
+						
+						//I don't like people messing with formatting in headers. So here we're going to use 
+						//the stripped text for everything and remove the formatting
+						
 						sqlite3_bind_int(book_insert, 3, PAGE_H2);
-						sqlite3_bind_text(book_insert, 4, c.content.c_str(), -1, SQLITE_STATIC);
+						sqlite3_bind_text(book_insert, 4, c.stripped_content.c_str(), -1, SQLITE_STATIC);
 						sqlite3_bind_text(book_insert, 5, c.stripped_content.c_str(), -1, SQLITE_STATIC);
 
-						pd.items.push_back(PageContentItem(PAGE_H2, c.content));
+						pd.items.push_back(PageContentItem(PAGE_H2, c.stripped_content));
 
 						// Only pack out the header when it's not the first thing in the page
 						if (itemid != 0) {
 							start_pos += 35;
 						}
 
-						start_pos += DrawingUtils::draw_h2(cr, c.content, rectangle_width, rectangle_height, start_pos);
+						start_pos += DrawingUtils::draw_h2(cr, c.stripped_content, rectangle_width, rectangle_height, start_pos);
 						start_pos += 35;
 					}
 					else {

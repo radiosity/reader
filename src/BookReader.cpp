@@ -103,7 +103,7 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context> & cr)
 		itemid++;
 
 	}
-
+	
 	//auto it = book.opf_files[0].metadata.find(MetadataType::TITLE);
 	//const ustring title = it->second.contents;
 	cr->set_source_rgb(0.5, 0.5, 0.5);
