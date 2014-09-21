@@ -33,95 +33,94 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <glibmm.h>
 #include <string>
 #include <vector>
-//Stuff's getting serious:	
-#include <mutex>             
+//Stuff's getting serious:
+#include <mutex>
 #include <condition_variable>
 
 #include <Epub.hpp>
 
-using Glib::ustring;  
+using Glib::ustring;
 
-using std::mutex; 
-using std::condition_variable; 
+using std::mutex;
+using std::condition_variable;
 
 enum PageContentType {
-	PAGE_H1, 
-	PAGE_H2, 
-	PAGE_PARAGRAPH, 
+	PAGE_H1,
+	PAGE_H2,
+	PAGE_PARAGRAPH,
 	PAGE_FRAGMENT
 };
 
 class PageContentItem {
 
 	public:
-		PageContentType pct; 
-		ustring content; 
-	
-		PageContentItem(PageContentType _pct, ustring _content); 
-		
+		PageContentType pct;
+		ustring content;
+
+		PageContentItem(PageContentType _pct, ustring _content);
+
 		PageContentItem(PageContentItem const & cpy);
 		PageContentItem(PageContentItem && mv) ;
-		PageContentItem& operator =(const PageContentItem& cpy);
-		PageContentItem& operator =(PageContentItem && mv) ;
-			
-		~PageContentItem(); 
-	
+		PageContentItem & operator =(const PageContentItem & cpy);
+		PageContentItem & operator =(PageContentItem && mv) ;
+
+		~PageContentItem();
+
 };
 
 class PageDescriptor {
-	
-	public: 
-		vector<PageContentItem> items; 
-	
-		PageDescriptor(); 
-		
+
+	public:
+		vector<PageContentItem> items;
+
+		PageDescriptor();
+
 		PageDescriptor(PageDescriptor const & cpy);
 		PageDescriptor(PageDescriptor && mv) ;
-		PageDescriptor& operator =(const PageDescriptor& cpy);
-		PageDescriptor& operator =(PageDescriptor && mv) ;
-			
-		~PageDescriptor(); 	
-	
+		PageDescriptor & operator =(const PageDescriptor & cpy);
+		PageDescriptor & operator =(PageDescriptor && mv) ;
+
+		~PageDescriptor();
+
 };
 
 class Pages {
-	
+
 	private:
-		mutex mtx; 
-		condition_variable ready; 
-		vector<PageDescriptor> descriptors; 
+		mutex mtx;
+		condition_variable ready;
+		vector<PageDescriptor> descriptors;
 		bool finished;
-	
-		bool available(const unsigned int n) const; 	
-	
-	public: 
-		Pages(); 
-	
+
+		bool available(const unsigned int n) const;
+
+	public:
+		Pages();
+
 		Pages(Pages const & cpy) = delete;
 		Pages(Pages && mv)  = delete;
-		Pages& operator =(const Pages& cpy) = delete;
-		Pages& operator =(Pages && mv) = delete;
-			
-		~Pages(); 		
-		
-		bool is_valid_index(const unsigned int n); 
-		PageDescriptor get(const unsigned int n); 
+		Pages & operator =(const Pages & cpy) = delete;
+		Pages & operator =(Pages && mv) = delete;
+
+		~Pages();
+
+		bool is_valid_index(const unsigned int n);
+		PageDescriptor get(const unsigned int n);
 		void add(PageDescriptor p);
-		void set_finished_loading(bool v); 
-		bool finished_loading(); 
-		void clear(); 
-	
+		void set_finished_loading(bool v);
+		bool finished_loading();
+		void clear();
+
 };
 
-class Paginator
-{
+class Paginator {
 
 	public:
 		Paginator() = delete;
 		virtual ~Paginator() = delete;
-	
-		static void load(Pages& pages, string filename); 
-	
+
+		static void load(Pages & pages, string filename);
+
 };
 
-#endif 
+#endif

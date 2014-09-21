@@ -32,45 +32,44 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "BookReader.hpp"
 
-using namespace Gtk; 
+using namespace Gtk;
 
-class MainWindow : public Window
-{
+class MainWindow : public Window {
 
-public:
-	MainWindow();
-	virtual ~MainWindow();
+	public:
+		MainWindow();
+		virtual ~MainWindow();
 
-protected:
-	// Slots
-	/*void on_switch_active_changed();
-	void on_title_entry_activate();
-	void on_subtitle_entry_activate();
-	void on_button_clicked();
-	void on_close();*/ 
+	protected:
+		// Slots
+		/*void on_switch_active_changed();
+		void on_title_entry_activate();
+		void on_subtitle_entry_activate();
+		void on_button_clicked();
+		void on_close();*/
 
-	void on_open();
-	void on_recent();
-	void on_destroy();
-	void on_create();
+		void on_open();
+		void on_recent();
+		void on_destroy();
+		void on_create();
 
-	//Book Reader
-	BookReader m_reader; 
+		//Book Reader
+		BookReader m_reader;
 
-	//Header Bar
-	HeaderBar m_header_bar;
-	Box m_box; 
-	Button m_create; 
-	Button m_open_button; 
-	Button m_open_menu; 
-	Button m_save; 
-	
-	//Signal handler
-	virtual bool on_key_press_event(GdkEventKey * event);
-	virtual bool on_scroll_event(GdkEventScroll * event);
+		//Header Bar
+		HeaderBar m_header_bar;
+		Box m_box;
+		Button m_create;
+		Button m_open_button;
+		Button m_open_menu;
+		Button m_save;
+
+		//Signal handler
+		virtual bool on_key_press_event(GdkEventKey * event);
+		virtual bool on_scroll_event(GdkEventScroll * event);
 
 
-private:
+	private:
 };
 
 #endif

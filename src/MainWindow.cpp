@@ -31,23 +31,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <iostream>
 
-using std::cout; 
-using std::endl; 
+using std::cout;
+using std::endl;
 
-MainWindow::MainWindow() 
+MainWindow::MainWindow()
 {
-	
+
 	set_icon_from_file("icon.png");
-	
+
 	add_events(Gdk::KEY_PRESS_MASK | Gdk::SCROLL_MASK);
-	
+
 	// Window properties
 	//set_title("HeaderBar Example");
 	set_border_width(0);
 	//set_default_size(800,800);
 
 	set_resizable(false);
-	
+
 	// Header bar
 	header_bar = &m_header_bar;
 	header_bar->set_title("Reader");
@@ -61,7 +61,7 @@ MainWindow::MainWindow()
 
 	m_open_button.set_label("Open");
 	m_open_button.signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_open));
-	
+
 	m_open_menu.set_image_from_icon_name("go-down-symbolic");
 	m_open_menu.set_tooltip_text("Open a recent file from a list");
 	m_open_menu.signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_recent));
@@ -90,11 +90,13 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::on_destroy() {
+void MainWindow::on_destroy()
+{
 	Main::quit();
 }
 
-void MainWindow::on_open() {
+void MainWindow::on_open()
+{
 	FileChooserDialog dialog(*this, "Choose a character file", FILE_CHOOSER_ACTION_OPEN);
 	//OpenFileDialog dialog("Something", *this, true);
 	dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
@@ -103,112 +105,116 @@ void MainWindow::on_open() {
 	dialog.run();
 }
 
-void MainWindow::on_recent() {
+void MainWindow::on_recent()
+{
 	RecentChooserDialog dialog(*this, "Choose a character file");
 	dialog.run();
-}	
+}
 
-void MainWindow::on_create() {
-	
+void MainWindow::on_create()
+{
+
 }
 
 
-bool MainWindow::on_key_press_event(GdkEventKey* event)
+bool MainWindow::on_key_press_event(GdkEventKey * event)
 {
 
 	#ifdef DEBUG
-	cout << "Keyboard Event recieved" << endl; 
+	cout << "Keyboard Event recieved" << endl;
 	#endif
-	
-	if(event->keyval == GDK_KEY_Right)
-	{
+
+	if(event->keyval == GDK_KEY_Right) {
 		#ifdef DEBUG
-		cout << "Going forward one page to: " << m_reader.m_book_area.pagenum + 1 << endl; 
+		cout << "Going forward one page to: " << m_reader.m_book_area.pagenum + 1 << endl;
 		#endif
-		
+
 		//Hide the page seek popover, if open:
 		m_reader.m_popover.set_visible(false);
-		
+
 		if(pages.is_valid_index(m_reader.m_book_area.pagenum + 1)) {
-			m_reader.m_book_area.pagenum++; 
-			m_reader.m_book_area.queue_draw(); 
+			m_reader.m_book_area.pagenum++;
+			m_reader.m_book_area.queue_draw();
 		}
-		return true; 
+
+		return true;
 	}
-	
-	else if(event->keyval == GDK_KEY_Left)
-	{
+
+	else if(event->keyval == GDK_KEY_Left) {
 		#ifdef DEBUG
-		cout << "Going backward one page to: " << m_reader.m_book_area.pagenum - 1 << endl; 
+		cout << "Going backward one page to: " << m_reader.m_book_area.pagenum - 1 << endl;
 		#endif
-		
+
 		//Hide the page seek popover, if open:
 		m_reader.m_popover.set_visible(false);
-		
+
 		if(m_reader.m_book_area.pagenum != 0) {
-			m_reader.m_book_area.pagenum--; 
-			m_reader.m_book_area.queue_draw(); 
+			m_reader.m_book_area.pagenum--;
+			m_reader.m_book_area.queue_draw();
 		}
-		return true; 
+
+		return true;
 	}
-	
-	 /*if (event->type == GDK_KEY_PRESS &&
-    event->keyval == GDK_KEY_1 &&
-    (event->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)) == GDK_MOD1_MASK)*/
-  
-	
+
+	/*if (event->type == GDK_KEY_PRESS &&
+	event->keyval == GDK_KEY_1 &&
+	(event->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)) == GDK_MOD1_MASK)*/
+
+
 	else if(event->keyval == GDK_KEY_g && (event->state & (GDK_CONTROL_MASK)) == GDK_CONTROL_MASK) {
-		
+
 		#ifdef DEBUG
-		cout << "Recieved ctrl-g, launching goto popover" << endl; 
+		cout << "Recieved ctrl-g, launching goto popover" << endl;
 		#endif
-		
+
 		m_reader.m_popover.set_pointing_to(m_reader.m_book_area.page_num_rect);
 		m_reader.m_popover.set_visible(true);
-		
+
 	}
-	
+
 	//if the event has not been handled, call the base class
 	return Gtk::Window::on_key_press_event(event);
-	
+
 }
 
-bool MainWindow::on_scroll_event(GdkEventScroll * event) {
-	
+bool MainWindow::on_scroll_event(GdkEventScroll * event)
+{
+
 	#ifdef DEBUG
-	cout << "Scroll Event recieved" << endl; 
+	cout << "Scroll Event recieved" << endl;
 	#endif
-	
+
 	//Hide the page seek popover, if open:
 	m_reader.m_popover.set_visible(false);
-	
+
 	if(event->direction == GDK_SCROLL_DOWN) {
 		#ifdef DEBUG
-		cout << "Going forward one page to: " << m_reader.m_book_area.pagenum + 1 << endl; 
+		cout << "Going forward one page to: " << m_reader.m_book_area.pagenum + 1 << endl;
 		#endif
-		
+
 		if(pages.is_valid_index(m_reader.m_book_area.pagenum + 1)) {
-			m_reader.m_book_area.pagenum++; 
-			m_reader.m_book_area.queue_draw(); 
+			m_reader.m_book_area.pagenum++;
+			m_reader.m_book_area.queue_draw();
 		}
-		return true; 
+
+		return true;
 	}
-	
-	else if(event->direction == GDK_SCROLL_UP)
-	{
+
+	else if(event->direction == GDK_SCROLL_UP) {
 		#ifdef DEBUG
-		cout << "Going backward one page to: " << m_reader.m_book_area.pagenum - 1 << endl; 
+		cout << "Going backward one page to: " << m_reader.m_book_area.pagenum - 1 << endl;
 		#endif
-		
+
 		if(m_reader.m_book_area.pagenum != 0) {
-			m_reader.m_book_area.pagenum--; 
-			m_reader.m_book_area.queue_draw(); 
+			m_reader.m_book_area.pagenum--;
+			m_reader.m_book_area.queue_draw();
 		}
-		return true; 
+
+		return true;
 	}
-	
+
 	return Gtk::Window::on_scroll_event(event);
-	
+
 }
 
 /*
@@ -239,4 +245,3 @@ void MainWindow::on_button_clicked()
 	dialog.run();
 }
 */
- 

@@ -29,17 +29,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define GLOBAL_HEADER
 
 #include <gtkmm.h>
-//Stuff's getting serious:	
-#include <mutex>             
+//Stuff's getting serious:
+#include <mutex>
 
 #include "Pages.hpp"
 
 using namespace Gtk;
-using namespace Glib; 
+using namespace Glib;
 
 extern HeaderBar * header_bar;
 
-extern Pages pages; 
+extern Pages pages;
 
 extern mutex import_mtx;
 

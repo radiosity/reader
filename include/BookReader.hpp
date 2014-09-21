@@ -42,50 +42,49 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <Epub.hpp>
 
-#include "Global.hpp" 
+#include "Global.hpp"
 #include "Pages.hpp"
 
-using std::string; 
+using std::string;
 using std::vector;
-using Glib::ustring; 
+using Glib::ustring;
 
-class BookArea : public Gtk::DrawingArea
-{
+class BookArea : public Gtk::DrawingArea {
 	public:
 		BookArea();
 		virtual ~BookArea();
-	
+
 		int pagenum;
 		Gdk::Rectangle page_num_rect;
 
 	protected:
 		//Override default signal handler:
-		virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
+		virtual bool on_draw(const Cairo::RefPtr<Cairo::Context> & cr);
 
 };
 
 class BookReader : public Gtk::Box {
-	
+
 	protected:
 		void on_goto_page();
 		void on_infobar_response(int);
-	
-		void info_bar_loading(); 
+
+		void info_bar_loading();
 		void info_bar_hide();
-	
+
 	public:
 		BookReader();
 		~BookReader();
 
 		InfoBar m_infobar;
-		Box m_infobar_box; 
-		Spinner m_infobar_spinner; 
+		Box m_infobar_box;
+		Spinner m_infobar_spinner;
 		Label m_infobar_label;
-		
+
 		BookArea m_book_area;
 		Popover m_popover;
 		Label m_popover_label;
-		Entry m_popover_entry; 
+		Entry m_popover_entry;
 		Box m_popover_box;
 		Box m_box;
 

@@ -35,27 +35,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace Glib;
 using namespace Gtk;
-using std::mutex; 
+using std::mutex;
 using std::unique_lock;
 
 HeaderBar * header_bar;
 Dispatcher info_bar_hide_dispatcher;
 
-Pages pages; 
-mutex import_mtx; 
+Pages pages;
+mutex import_mtx;
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
-	
+
 	Paginator::load(pages, string("book"));
-	
+
 	RefPtr<Application> app = Application::create(argc, argv, "org.rmarti.reader");
 
 	MainWindow window;
 
 	int ret = app->run(window);
-	
-	unique_lock<mutex> lck(import_mtx); 
-	
-	return ret; 
+
+	unique_lock<mutex> lck(import_mtx);
+
+	return ret;
 }

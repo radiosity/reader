@@ -38,28 +38,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using Glib::ustring;
 
-using std::pair; 
+using std::pair;
 
 class DrawingUtils {
-	
+
 	public:
-		
-		DrawingUtils() = delete; 
+
+		DrawingUtils() = delete;
 		~DrawingUtils() = delete;
 
 		static constexpr double MARGIN_PERCENT = 8.0;
-		static constexpr double PHI = 1.618033988749894848204586834365638117720309179805762862135448;	
-	
-		static void draw_rectangle(const Cairo::RefPtr<Cairo::Context>& cr, int width, int height);
-		static Gdk::Rectangle draw_header(const Cairo::RefPtr<Cairo::Context>& cr, const int width, const int height, const ustring title, const int pagen);
-		static int draw_h1(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height);
-		static bool will_fit_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
-		static int draw_h2(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
-		static bool will_fit_text(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos); 
-		static pair<ustring, ustring> pack_text(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
-		static int draw_text(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
-		static int draw_fragment(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
-	
+		static constexpr double PHI = 1.618033988749894848204586834365638117720309179805762862135448;
+
+		static void draw_rectangle(const Cairo::RefPtr<Cairo::Context> & cr, int width, int height);
+		static Gdk::Rectangle draw_header(const Cairo::RefPtr<Cairo::Context> & cr, const int width, const int height, const ustring title, const int pagen);
+		static int draw_h1(const Cairo::RefPtr<Cairo::Context> & cr, const ustring text, const int rectangle_width, const int rectangle_height);
+		static bool will_fit_h2(const Cairo::RefPtr<Cairo::Context> & cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
+		static int draw_h2(const Cairo::RefPtr<Cairo::Context> & cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
+		static bool will_fit_text(const Cairo::RefPtr<Cairo::Context> & cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
+		static pair<ustring, ustring> pack_text(const Cairo::RefPtr<Cairo::Context> & cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
+		static int draw_text(const Cairo::RefPtr<Cairo::Context> & cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
+		static int draw_fragment(const Cairo::RefPtr<Cairo::Context> & cr, const ustring text, const int rectangle_width, const int rectangle_height, const int start_pos);
+
 };
 
 #endif
