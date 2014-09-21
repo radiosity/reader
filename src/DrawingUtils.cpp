@@ -303,7 +303,7 @@ class UstringSplitter2 {
 			list<ustring> open_tags;
 			
 			unsigned int i = 0;
-			unsigned int content_size = content.size();
+			const unsigned int content_size = content.size();
 			
 			bool expecting_word_end = true; 
 			
@@ -361,15 +361,15 @@ class UstringSplitter2 {
 		}
 		~UstringSplitter2() { }
 		
-		unsigned int nwords() {
+		unsigned int nwords() const {
 			
 			return words.size();
 			
 		}
 		
-		ustring get(const unsigned int word_index) {
+		ustring get(const unsigned int word_index) const {
 			
-			Word w = words[word_index];
+			const Word & w = words[word_index];
 			
 			ustring tmp = content.substr(0, w.index);
 			
@@ -383,9 +383,9 @@ class UstringSplitter2 {
 			
 		}
 		
-		ustring get_fragment(unsigned int word_index) {
+		ustring get_fragment(unsigned int word_index) const {
 			
-			Word w = words[word_index];
+			const Word & w = words[word_index];
 			
 			ustring tmp = "";
 			
@@ -407,8 +407,8 @@ pair<ustring, ustring> DrawingUtils::pack_text(const Cairo::RefPtr<Cairo::Contex
                        const int rectangle_width, const int rectangle_height, const int start_pos)
 {
 	
-	UstringSplitter2 tmp(text);
-	unsigned int nwords = tmp.nwords();
+	const UstringSplitter2 tmp(text);
+	const unsigned int nwords = tmp.nwords();
 
 	ustring working_text = "";
 	
