@@ -57,8 +57,7 @@ void DrawingUtils::draw_rectangle(const Cairo::RefPtr<Cairo::Context> & cr,
 {
 
 	cr->rectangle(0, 0, width, height);
-	cr->fill();
-	cr->rectangle(0, 0, width, height);
+	cr->fill_preserve();
 	cr->set_line_width(1.0);
 	cr->set_source_rgb(0.2, 0.2, 0.2);
 	cr->stroke();
