@@ -409,7 +409,7 @@ pair<ustring, ustring> DrawingUtils::pack_text(const Cairo::RefPtr<Cairo::Contex
 	
 	const UstringSplitter2 tmp(text);
 	const unsigned int nwords = tmp.nwords();
-
+	
 	ustring working_text = "";
 	
 	//Special case. If there's only one word, and we're calling pack text, 
@@ -419,35 +419,36 @@ pair<ustring, ustring> DrawingUtils::pack_text(const Cairo::RefPtr<Cairo::Contex
 		return pair<ustring, ustring>(working_text, text); 
 	}
 	
-	for(unsigned int i = 0; i < nwords; i++) {
+	unsigned int low = 0; 
+	unsigned int high = nwords - 1;
 	
-		ustring clipped_text = tmp.get(i+1);
+	while (low != high) {
 		
-		if(will_fit_text(cr, clipped_text, rectangle_width, rectangle_height, start_pos)) {
-			//it fits;
+		unsigned int mid = (low + high) / 2; 
+		
+		const ustring clipped_text = tmp.get(mid+1);
+		
+		if (will_fit_text(cr, clipped_text, rectangle_width, rectangle_height, start_pos)) {
+			//If the text will fit, then anything after it _might_ fit as well, so go upwards
 			working_text = clipped_text; 
+			low = mid + 1;
 		}
 		else {
-			//doesn't fit.
-			if(i == 0) {
-				//special case. Nothing fits, we can't pack anything. Return the whole thing. 
-				return pair<ustring, ustring>(working_text, text); 
-				
-			}
-			else {
-				//Draw it
-				draw_text(cr, working_text, rectangle_width, rectangle_height, start_pos); 
-				
-				//finally, return the fragment.
-				return pair<ustring, ustring>(working_text, tmp.get_fragment(i));
-			}
+			//the text won't fit, so the first element that fits must be before.
+			high = mid;
 		}
-	
 	}
 	
-	//shouldn't reach here
-	return pair<ustring, ustring>("", ""); 
+	if(low == 0) {
+		//special case. Nothing fits, we can't pack anything. Return the whole thing. 
+		return pair<ustring, ustring>(working_text, text); 
+	}
 	
+	draw_text(cr, working_text, rectangle_width, rectangle_height, start_pos); 
+				
+	//finally, return the fragment.
+	return pair<ustring, ustring>(working_text, tmp.get_fragment(low));
+				
 }
 
 int DrawingUtils::draw_text(const Cairo::RefPtr<Cairo::Context>& cr, const ustring text,
