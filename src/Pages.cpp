@@ -343,8 +343,6 @@ namespace {
 
 			auto it = book.opf_files[0].metadata.find(MetadataType::TITLE);
 			const ustring title = it->second.contents;
-			cr->set_source_rgb(0.5, 0.5, 0.5);
-			DrawingUtils::draw_header(cr, rectangle_width, rectangle_height, title, pagenum);
 
 			it = book.opf_files[0].metadata.find(MetadataType::CREATOR);
 			const ustring author = it->second.contents;
@@ -502,6 +500,9 @@ namespace {
 				itemid++;
 
 			}
+			
+			cr->set_source_rgb(0.5, 0.5, 0.5);
+			DrawingUtils::draw_header(cr, rectangle_width, rectangle_height, title, pagenum);
 
 			pages.add(pd);
 

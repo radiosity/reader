@@ -72,11 +72,6 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context> & cr)
 	cr->set_source_rgb(1.0, 1.0, 1.0);
 	DrawingUtils::draw_rectangle(cr, rectangle_width, rectangle_height);
 
-	//auto it = book.opf_files[0].metadata.find(MetadataType::TITLE);
-	//const ustring title = it->second.contents;
-	cr->set_source_rgb(0.5, 0.5, 0.5);
-	page_num_rect = DrawingUtils::draw_header(cr, rectangle_width, rectangle_height, "Pride and Prejudice", pagenum + 1);
-
 	cr->set_source_rgb(0.15, 0.15, 0.15);
 	//cr->set_source_rgb(1, 0.33, 0.33);
 
@@ -109,6 +104,11 @@ bool BookArea::on_draw(const Cairo::RefPtr<Cairo::Context> & cr)
 
 	}
 
+	//auto it = book.opf_files[0].metadata.find(MetadataType::TITLE);
+	//const ustring title = it->second.contents;
+	cr->set_source_rgb(0.5, 0.5, 0.5);
+	page_num_rect = DrawingUtils::draw_header(cr, rectangle_width, rectangle_height, "Pride and Prejudice", pagenum + 1);
+	
 	return true;
 }
 
