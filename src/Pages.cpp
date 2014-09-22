@@ -251,22 +251,7 @@ namespace {
 		                         "contenttype INT NOT NULL," \
 		                         "contentformatted TEXT NOT NULL," \
 		                         "contentstripped TEXT NOT NULL ) ;";
-
-		sqlite3_stmt * tmpstmt;
-
-		rc = sqlite3_prepare_v2(db, table_sql.c_str(), -1, &tmpstmt, 0);
-
-		if(rc != SQLITE_OK && rc != SQLITE_DONE) {
-			throw - 1;
-		}
-
-		rc = sqlite3_step(tmpstmt);
-
-		if(rc != SQLITE_OK && rc != SQLITE_DONE) {
-			throw - 1;
-		}
-
-		sqlite3_finalize(tmpstmt);
+		sqlite3_exec(db, table_sql.c_str(), NULL, NULL, &errmsg);
 
 		//Table created.
 
@@ -397,15 +382,15 @@ namespace {
 					}
 					else {
 
-						//I don't like people messing with formatting in headers. So here we're going to use 
+						//I don't like people messing with formatting in headers. So here we're going to use
 						//the stripped text for everything and remove the formatting
-						
+
 						sqlite3_bind_int(book_insert, 3, PAGE_H1);
 						sqlite3_bind_text(book_insert, 4, c.stripped_content.c_str(), -1, SQLITE_STATIC);
 						sqlite3_bind_text(book_insert, 5, c.stripped_content.c_str(), -1, SQLITE_STATIC);
 
 						pd.items.push_back(PageContentItem(PAGE_H1, c.stripped_content));
-						
+
 						start_pos += DrawingUtils::draw_h1(cr, c.stripped_content, rectangle_width, rectangle_height);
 
 						//ensure that there's only one H1 on a page.
@@ -416,10 +401,10 @@ namespace {
 				}
 				else if (c.type == H2) {
 					if(DrawingUtils::will_fit_h2(cr, c.content, rectangle_width, rectangle_height, start_pos)) {
-						
-						//I don't like people messing with formatting in headers. So here we're going to use 
+
+						//I don't like people messing with formatting in headers. So here we're going to use
 						//the stripped text for everything and remove the formatting
-						
+
 						sqlite3_bind_int(book_insert, 3, PAGE_H2);
 						sqlite3_bind_text(book_insert, 4, c.stripped_content.c_str(), -1, SQLITE_STATIC);
 						sqlite3_bind_text(book_insert, 5, c.stripped_content.c_str(), -1, SQLITE_STATIC);
@@ -507,7 +492,7 @@ namespace {
 				itemid++;
 
 			}
-			
+
 			cr->set_source_rgb(0.5, 0.5, 0.5);
 			DrawingUtils::draw_header(cr, rectangle_width, rectangle_height, title, pagenum);
 
